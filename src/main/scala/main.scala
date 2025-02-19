@@ -14,7 +14,7 @@ object Main {
     //mostrar en pantalla
     println(palabra)
 
-    // array, se puede no poner new, val hace cont al array, no a sus valores
+    // array, se puede no poner new, val hace const al array, no a sus valores
     val saludos = new Array[Int](3) // Array[tipo](tam/valores)
     saludos(0) = 0 // da valor a index
     saludos(1) = 1
@@ -23,6 +23,10 @@ object Main {
     saludos.update(0, 8) //mod valor
     println(saludos.apply(0))
     val saludosComa=saludos.mkString(",") //separa los elementos eso
+    //lista, siempre inmutable sus elementos
+    val l = List(1,2,3)// si ()-> lista vacia; nil= lista nothin
+    val  l2= 1::l     // une un entero y lista anterior o varios enteros y nil
+    val  l3= l:::l2  // une 2 listas
 
   //declaracion de funcion, se puede usar en repl con load archivo
   def max(x: Int, y: Int) =
