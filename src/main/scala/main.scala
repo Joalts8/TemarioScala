@@ -23,13 +23,23 @@ object Main {
     saludos.update(0, 8) //mod valor
     println(saludos.apply(0))
     val saludosComa=saludos.mkString(",") //separa los elementos eso
+
     //lista, siempre inmutable sus elementos
     val l = List(1,2,3)// si ()-> lista vacia; nil= lista nothin
     val  l2= 1::l     // une un entero y lista anterior o varios enteros y nil
     val  l3= l:::l2  // une 2 listas
+
     //tuplas, 2 elementos
     var par =(99,"burbuja")
     println(par._1) // imprime 1er valor, ._2 segundo, sirve (index)
+
+    //set inmutable(elem)
+    var c = Set(1,2,3)
+    c += 4 // añade 4 al set
+    //set mutable
+    import scala.collection.mutable
+    val set = mutable.Set(1, 2, 3)
+
 
   //declaracion de funcion, se puede usar en repl con load archivo
   def max(x: Int, y: Int) =
