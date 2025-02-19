@@ -47,11 +47,18 @@ object Main {
     mapa += (4->"ac") //añade al map
   }
 
-  //declaracion de funcion ({}(si 1 ln de cod) y tipo devuelto no necesario), se puede usar en repl con load archivo
+  //declaracion de funcion ({}(si 1 ln de cod) y tipo devuelto no necesario), se puede usar en repl con load dirArchivo->import clase
   /*def funcion(parametros):tipoDevuelto={
       blabla (devuelve ultimo valor)
   }*/
   def max(x: Int, y: Int) = {
     if (x > y) x else y
+  }
+  def buclesSuma(z:Int)={// while es igual
+    val r=(1 to 10)
+    for(elem<- r){ // estructura for(elemento<- coleccion)  foreach(a veces es funcion)
+      println(elem)
+    }
+
   }
 }
