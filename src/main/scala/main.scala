@@ -8,6 +8,7 @@ object Main {
     var entero2: Int = 10
 
     entero2=entero+entero2
+    entero==entero2 //comparacion en tipos basicos similar a equals; entre objetos es como eq->si son el mismo objeto
 
     //Interpolacion de String-> En vez palabra= "bla + palabra+ ", " + entero2; si se opera-> ${val+bla}
     palabra= s"bla $palabra, $entero2" //s= string; f= variar formato ; raw= quita \n
@@ -44,9 +45,13 @@ object Main {
     //mapas, se muetra k con (v)
     var mapa = Map(1->"a",2->"b",3->"c")
     mapa += (4->"ac") //añade al map
+  }
 
-  //declaracion de funcion, se puede usar en repl con load archivo
-  def max(x: Int, y: Int) =
-      if (x > y) x else y
+  //declaracion de funcion ({}(si 1 ln de cod) y tipo devuelto no necesario), se puede usar en repl con load archivo
+  /*def funcion(parametros):tipoDevuelto={
+      blabla (devuelve ultimo valor)
+  }*/
+  def max(x: Int, y: Int) = {
+    if (x > y) x else y
   }
 }
