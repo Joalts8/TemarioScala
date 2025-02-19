@@ -40,6 +40,9 @@ object Main {
     import scala.collection.mutable
     val set = mutable.Set(1, 2, 3)
 
+    //mapas, se muetra k con (v)
+    var mapa = Map(1->"a",2->"b",3->"c")
+    mapa += (4->"ac") //añade al map
 
   //declaracion de funcion, se puede usar en repl con load archivo
   def max(x: Int, y: Int) =
