@@ -13,9 +13,19 @@ object Main {
     palabra= s"bla $palabra, $entero2" //s= string; f= variar formato ; raw= quita \n
     //mostrar en pantalla
     println(palabra)
-    //declaracion de funcion, se puede usar en repl con load archivo
-    def max(x: Int, y: Int) =
+
+    // array, se puede no poner new, val hace cont al array, no a sus valores
+    val saludos = new Array[Int](3) // Array[tipo](tam/valores)
+    saludos(0) = 0 // da valor a index
+    saludos(1) = 1
+    saludos(2) = 2
+    println(saludos.apply(0)) // muestra valor en index
+    saludos.update(0, 8) //mod valor
+    println(saludos.apply(0))
+    val saludosComa=saludos.mkString(",") //separa los elementos eso
+
+  //declaracion de funcion, se puede usar en repl con load archivo
+  def max(x: Int, y: Int) =
       if (x > y) x else y
   }
 }
-//prueba
