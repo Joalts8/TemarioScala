@@ -54,11 +54,23 @@ object Main {
   def max(x: Int, y: Int) = {
     if (x > y) x else y
   }
-  def buclesSuma(z:Int)={// while es igual
+  def buclesSuma()={// while es igual
     val r=(1 to 10)
     for(elem<- r){ // estructura for(elemento<- coleccion)  foreach(a veces es funcion)
       println(elem)
     }
-
   }
+  def switch(x: Int)={
+    val palabra = x match { // puede usarse como switch o para asignar como en el ejemplo
+      case 1=> "Lunes"
+      case 3=> {
+        println(x)
+        "msi"
+      }
+      case c if (c>3 && c<8)=> "aña"
+      case 2|9|8=> "QUE"
+      case _=> "mondongo"// caso default
+    }
+  }
+
 }
