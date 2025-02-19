@@ -35,9 +35,10 @@ object Main {
 
     //set inmutable(elem)
     var c = Set(1,2,3)
-    c += 4 // añade 4 al set
+    c += 4          // añade 4 al set, con ++->set(elems)
+    c --= Set(1,2) // quita elementos dado un set(1,2), con - ->elimina un elemento
     //set mutable
-    import scala.collection.mutable
+    import scala.collection.mutable // arriba
     val set = mutable.Set(1, 2, 3)
 
     //mapas, se muetra k con (v)
