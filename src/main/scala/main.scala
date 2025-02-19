@@ -15,6 +15,7 @@ object Main {
     //mostrar en pantalla
     println(palabra)
 
+
     // array, se puede no poner new, val hace const al array, no a sus valores
     val saludos = new Array[Int](3) // Array[tipo](tam/valores)
     saludos(0) = 0 // da valor a index
@@ -45,6 +46,12 @@ object Main {
     //mapas, se muetra k con (v)
     var mapa = Map(1->"a",2->"b",3->"c")
     mapa += (4->"ac") //añade al map
+
+    //tryCatch
+    try {
+      max(3, 7)
+    }catch
+      case e: RuntimeException=>println("errr" + e.getMessage)
   }
 
   //declaracion de funcion ({}(si 1 ln de cod) y tipo devuelto no necesario), se puede usar en repl con load dirArchivo->import clase
