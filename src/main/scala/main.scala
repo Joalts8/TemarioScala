@@ -1,5 +1,5 @@
 object Main {
-  // tools-> scala REPL para ejecutar codigo sin escribirlo en fichero
+  // tools-> scala REPL para ejecutar codigo sin escribirlo en fichero, ; no es obligatorio
   def main(args: Array[String]): Unit = {
     println("Hello world")
     // declaracion de constante y variables(se puede indicar o no el tipo)
