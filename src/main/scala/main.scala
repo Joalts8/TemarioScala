@@ -27,6 +27,9 @@ object Main {
     val l = List(1,2,3)// si ()-> lista vacia; nil= lista nothin
     val  l2= 1::l     // une un entero y lista anterior o varios enteros y nil
     val  l3= l:::l2  // une 2 listas
+    //tuplas, 2 elementos
+    var par =(99,"burbuja")
+    println(par._1) // imprime 1er valor, ._2 segundo, sirve (index)
 
   //declaracion de funcion, se puede usar en repl con load archivo
   def max(x: Int, y: Int) =
