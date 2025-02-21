@@ -5,7 +5,7 @@ class ArrayYColecciones {
     saludos(0) = 0 // da valor a index
     saludos(1) = 1
     saludos(2) = 2
-    println(saludos.apply(0)) // muestra valor en index
+    println(saludos.apply(0)) // muestra valor en index es igual a saludos(0)
     saludos.update(0, 8) //mod valor
     println(saludos.apply(0))
     val saludosComa = saludos.mkString(",") //separa los elementos eso
