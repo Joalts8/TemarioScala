@@ -6,6 +6,14 @@ class Clase {
 
   def inc(a: Int) = suma += a
   def valor = suma
+  override def toString = s"La suma es: $suma" // metodo toString se puede especificar tipo
+}
+
+class Clase2(n:Int,i:Int) {
+  require(n>4)//esto hace q n deba cumplir esa condicion
+  private var a=n
+  private var b=i
+  def this(n:Int) = this(n,1)//otro constructor a parte del normal
 }
 
 // creacion de clase y objeto unico->  no se puede usar como una clase normal y tener varias instancias
@@ -29,6 +37,7 @@ object Contador{
 
 // objeto unico q extiende de App=> ejecutable y usa el objeto unico contador
 object Main2 extends App{
+  val ejemplo=new Clase2(5,6)
   Contador.calcula("En scala cada valor es un objeto")
   Contador.calcula("Hola Mundo")
   Contador.calcula("función estática")
