@@ -16,7 +16,7 @@ object Main {
     println(palabra)
   }
 
-  //declaracion de funcion ({}(si 1 ln de cod) y tipo devuelto no necesario), se puede usar en repl con load dirArchivo->import clase
+  //declaracion de funcion ((par), {}(si 1 ln de cod) y tipo devuelto no necesario), se puede usar en repl con load dirArchivo->import clase
   /*def funcion(parametros):tipoDevuelto={
       blabla (devuelve ultimo valor)
   }*/

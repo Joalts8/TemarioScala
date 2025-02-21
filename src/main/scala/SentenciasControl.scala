@@ -3,7 +3,7 @@ class SentenciasControl {
     if(bool==true) println("verdadero")
     else if(bool==false){
       println("false")
-      bucle()
+      bucle
     } else println("No es booleano")
   }
 
@@ -20,7 +20,7 @@ class SentenciasControl {
     }
   }
 
-  def bucle() = { // while es igual que en java
+  def bucle = { // while es igual que en java
     val r = (1 to 10)
     for (elem <- r) { // estructura for(elemento<- coleccion)  foreach(a veces es funcion)
       println(elem)
