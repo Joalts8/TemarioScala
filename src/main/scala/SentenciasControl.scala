@@ -22,7 +22,7 @@ class SentenciasControl {
 
   def bucle = { // while es igual que en java
     val r = (1 to 10)
-    for (elem <- r) { // estructura for(elemento<- coleccion) o (bla to n)  foreach(a veces es funcion)
+    for (elem <- r) { // estructura for(elemento<- coleccion/elem) o (bla to n)     foreach(a veces es funcion)
       println(elem)
     }
   }
