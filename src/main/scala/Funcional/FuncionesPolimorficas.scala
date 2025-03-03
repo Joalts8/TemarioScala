@@ -26,9 +26,22 @@ object FuncionesPolimorficas extends App{
   def compose[A, B, C](f: B => C, g: A => B): A => C={
     y => f(g(y))
   }
+  //metodo para ver si un array esta ordenado
+  def isSorted[A](v: Array[A], gt: (A, A) => Boolean): Boolean =
+    def loop(n: Int): Boolean =
+      if (n >= v.length - 1) true
+      else if (!gt(v(n), v(n + 1))) false
+      else loop(n + 1)
+    loop(0)
+
 
   //ejemplo sintasis en funcion polimorfica
   val array= Array[Int](1,2,3,4,5)
   println(busca(array, _%2==0))
   println(busca(array, x=>x%3==0))
+
+  //ejemplo de array ordenado
+  val prueba = Array[Int](1, 2, 3, 4)
+  if (isSorted(prueba, _ >= _)) println("true")
+  else println("false")
 }
