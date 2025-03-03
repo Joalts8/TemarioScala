@@ -21,7 +21,7 @@ class Clase2(n:Int,var i:Int) {
   //funcion q cambia +-*/  ejemplo en main
   def +(rac: Clase2): Clase2 =
     new Clase2(rac.ne * i + n * rac.ne, i * rac.ia)
-  //cambio de la funcion apply-> puedes crear como con array(1,2,3)
+  //cambio de la funcion apply-> puedes crear como con array(1,2,3)*Otro ejemplo en EDPolimorfica*
   def apply(num: Int, den: Int): Clase2 = {
     new Clase2(num, den)
   }
