@@ -1,4 +1,6 @@
-object Funcional extends App{
+package Funcional
+
+object FuncionesPolimorficas extends App{
   //Pueden existir funciones en funciones
   //funcion polimorfica-> para tipo generico usando [T], y usando funcion A-> bollean
   def busca[A](v: Array[A], p: A => Boolean) = {  // esta condicion se puede definir _condicion(_ es generico) o elem=> condicion

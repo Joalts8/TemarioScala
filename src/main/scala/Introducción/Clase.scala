@@ -1,3 +1,5 @@
+package Introducción
+
 import scala.collection.mutable
 
 // Creacion de clase, parecido a java pero sin constructores definidos-> se se inicializa como var/val pero usando new Clase

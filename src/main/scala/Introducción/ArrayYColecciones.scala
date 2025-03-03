@@ -1,3 +1,5 @@
+package Introducción
+
 class ArrayYColecciones {
   def array(): Unit = {
     // array, se puede no poner new, val hace const al array, no a sus valores

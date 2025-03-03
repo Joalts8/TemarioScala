@@ -1,3 +1,5 @@
+package Introducción
+
 object Main {
   // tools-> scala REPL para ejecutar codigo sin escribirlo en fichero, ; no es obligatorio
   def main(args: Array[String]): Unit = {
