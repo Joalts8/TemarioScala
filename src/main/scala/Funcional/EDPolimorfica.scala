@@ -43,7 +43,7 @@ enum EDPolimorfica[+A]:
 
   //ejemplo del uso de foldRigth
   def longitud[A](l: EDPolimorfica[A]) = foldRight[A, Int](l, 0, (x, y) => y + 1)
-  //Uso para crear mapa donde Key son los valores de EDP y Values los resultados de f(k)
+  //Uso para crear values de un map=f(k) donde Key son los valores de EDP
   def map[A, B](l: EDPolimorfica[A], f: A => B): EDPolimorfica[B] = {
     l match
       case Nula => Nula
@@ -58,7 +58,6 @@ enum EDPolimorfica[+A]:
   }
   def filter1[A](l: EDPolimorfica[A], f: A => Boolean): EDPolimorfica[A] = foldRight[A, EDPolimorfica[A]](l, Nula, (x, y) => if (f(x)) Cons(x, y) else y)
 
-
 // define comportamiento del enum
 object EDPolimorfica {
   //metodo apply(visto en clase) dado tantos elems tipo A, coge el primero y hace la sublista con la cola de args(1 a n)
@@ -68,5 +67,12 @@ object EDPolimorfica {
 }
 
 object pruebas extends App {
-
+  val p: EDPolimorfica[Int] = EDPolimorfica(1, 2, 3, 4)
+  println(p)
+  println(p.suma(p))
+  println(p.suma_cola(p))
+  println(p.operar(p,1,(x,y)=>x*y))
+  println(p.longitud(p))
+  println(p.map(p,(x)=>2*x))
+  println(p.filter1(p,_%2==0))
 }
