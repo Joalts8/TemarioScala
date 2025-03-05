@@ -34,17 +34,15 @@ object FuncionesPolimorficas extends App{
       else loop(n + 1)
     loop(0)
 
-
+  /*PRUEBAS*/
   //ejemplo sintasis en funcion polimorfica
   val array= Array[Int](1,2,3,4,5)
   println(busca(array, _%2==0))
   println(busca(array, x=>x%3==0))
-
   //ejemplo de array ordenado
   val prueba = Array[Int](1, 2, 3, 4)
   if (isSorted(prueba, _ >= _)) println("true")
   else println("false")
-
   //pruebas de mod de funciones
   def suma (x:Int) =x+5
   def producto (x:Int) =x*2
