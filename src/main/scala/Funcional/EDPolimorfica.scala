@@ -41,6 +41,10 @@ enum EDPolimorfica[+A]:
     bucle(l, inic)
   }
 
+  def longitud[A](l: EDPolimorfica[A]) =
+    foldRight[A, Int](l, 0, (x, y) => y + 1)
+
+
   def foldRight[A, B](l: EDPolimorfica[A], acc: B, f: (A, B) => B): B = l match
     case Nula => acc
     case Cons(a, r) => f(a, foldRight(r, acc, f)) //resuelve de derecha a izda
@@ -50,9 +54,22 @@ enum EDPolimorfica[+A]:
       case Nula => acc
       case Cons(a, r) => foldLeft(r, f(a, acc), f) //acumula al revés
 
-  def longitud[A](l: EDPolimorfica[A]) =
-    foldRight[A, Int](l, 0, (x, y) => y + 1)
-  
+
+  def map[A, B](l: EDPolimorfica[A], f: A => B): EDPolimorfica[B] = l match
+    case Nula => Nula
+    case Cons(a, r) => Cons(f(a), map(r, f))
+
+  def map1[A, B](l: EDPolimorfica[A], f: A => B): EDPolimorfica[B] =
+    foldRight[A, EDPolimorfica[B]](l, Nula, (x, y) => Cons(f(x), y))
+
+
+  def filter[A](l: EDPolimorfica[A], f: A => Boolean): EDPolimorfica[A] = l match
+    case Nula => Nula
+    case Cons(a, r) => if (f(a)) Cons(a, filter(r, f)) else filter(r, f)
+
+  def filter1[A](l: EDPolimorfica[A], f: A => Boolean): EDPolimorfica[A] =
+    foldRight[A, EDPolimorfica[A]](l, Nula, (x, y) => if (f(x)) Cons(x, y) else y)
+
 
 // define comportamiento del enum
 object EDPolimorfica:
