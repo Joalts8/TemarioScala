@@ -8,7 +8,6 @@ object FuncionesPolimorficas extends App{
       if (n >= v.length) -1
       else if (p(v(n))) n
       else bucle(n + 1)
-
     bucle(0)
   }
 
