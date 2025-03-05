@@ -44,4 +44,10 @@ object FuncionesPolimorficas extends App{
   val prueba = Array[Int](1, 2, 3, 4)
   if (isSorted(prueba, _ >= _)) println("true")
   else println("false")
+
+  //pruebas de mod de funciones
+  def suma (x:Int) =x+5
+  def producto (x:Int) =x*2
+  val fun = compose(producto, suma)
+  println(fun(2))
 }
