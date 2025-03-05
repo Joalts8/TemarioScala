@@ -1,4 +1,4 @@
-package Introducción
+package Introduccion
 
 class ArrayYColecciones {
   def array(): Unit = {

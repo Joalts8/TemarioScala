@@ -1,4 +1,4 @@
-package Introducción
+package Introduccion
 
 object Main {
   // tools-> scala REPL para ejecutar codigo sin escribirlo en fichero, ; no es obligatorio
