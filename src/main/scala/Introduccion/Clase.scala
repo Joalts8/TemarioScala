@@ -48,6 +48,7 @@ object Contador{
       cont.valor
     }
   }
+  // crea string de los elementos segun un inicio, separador  y final o solo separador
   def log() =
     println(mapa.mkString("\n"))
 }
