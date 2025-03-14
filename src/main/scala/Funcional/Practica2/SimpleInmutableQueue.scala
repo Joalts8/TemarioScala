@@ -28,7 +28,11 @@ class SimpleQueue[T] private (private val elems: List[T]) extends ImmutableQueue
       false
     }
   }
-  // override def toString: String = ...
+  
+  override def toString: String = {
+    elems.mkString("Queue(", ", ", ")")
+  }
+  
   override def equals(obj: Any): Boolean = {
     obj match
       case cola2: SimpleQueue[T] if (cola2.elems == this.elems) => true
