@@ -7,11 +7,37 @@ trait ImmutableQueue[T] {
 }
 
 class SimpleQueue[T] private (private val elems: List[T]) extends ImmutableQueue[T] {
-  // def this(elems: T*) = ...
-  // ...
+  def this(elems: T*) = {
+    this(elems.toList)
+  }
+
+  override def enqueue(elem: T): ImmutableQueue[T] = {
+    SimpleQueue[T](elems.appended(elem))
+  }
+
+  override def dequeue(): (T, ImmutableQueue[T]) = {
+    elems match
+      case Nil=> throw new RuntimeException("Cola vacía")
+      case a::r=> (a,SimpleQueue[T](r))
+  }
+
+  def isEmpty: Boolean = {
+    if (elems.isEmpty) {
+      true
+    } else {
+      false
+    }
+  }
   // override def toString: String = ...
-  // override def equals(obj: Any): Boolean = ... 
-  // override def hashCode(): Int = ...
+  override def equals(obj: Any): Boolean = {
+    obj match
+      case cola2: SimpleQueue[T] if (cola2.elems == this.elems) => true
+      case _ => false
+  }
+
+  override def hashCode(): Int = {
+    elems.hashCode()
+  }
 }
 
 @main def testSimpleQueue(): Unit = {
