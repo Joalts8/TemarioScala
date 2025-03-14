@@ -1,5 +1,5 @@
 package Funcional.Practica2
-
+/*
 class EfficientQueue[T] private (private val front: List[T], private val rear: List[T]) extends ImmutableQueue[T] {
   // def this(p: T*) = ...
   // ...
@@ -14,4 +14,4 @@ class EfficientQueue[T] private (private val front: List[T], private val rear: L
   val q2 = EfficientQueue(1, 2, 3, 4)
   assert(q == q2, s"${q} and ${q2} should be equal")
   assert(q.hashCode() == q2.hashCode(), s"The hash codes of ${q} and ${q2} should be equal")
-}
+}*/
