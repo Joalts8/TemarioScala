@@ -4,41 +4,48 @@ import scala.collection.mutable.ArrayBuffer
 
 trait MutableQueue[T] {
   def enqueue(elem: T): Unit
+
   def dequeue(): Option[T]
+
   def isEmpty: Boolean
 }
 
 class ArrayQueue[T](elems: T*) extends MutableQueue[T] {
   private val buffer = ArrayBuffer[T](elems: _*)
-    def enqueue(elem: T): Unit = {
-      buffer.append(elem)
-    }
-    def dequeue(): Option[T] = {
-      if (!isEmpty) {
-        Some(buffer.remove(0))
-      } else {
-        None
-      }
-    }
-    def isEmpty: Boolean = {
-      if (buffer.isEmpty) {
-        true
-      } else {
-        false
-      }
 
+  def enqueue(elem: T): Unit = {
+    buffer.append(elem)
+  }
+
+  def dequeue(): Option[T] = {
+    if (!isEmpty) {
+      Some(buffer.remove(0))
+    } else {
+      None
     }
-    override def toString: String ={
-     buffer.mkString("Queue(",", ", ")")
+  }
+
+  def isEmpty: Boolean = {
+    if (buffer.isEmpty) {
+      true
+    } else {
+      false
     }
-    override def equals(obj: Any): Boolean = {
-      obj match
-        case cola2: ArrayQueue[T] if (cola2.buffer==this.buffer)=>true
-        case _=>false
-    }
-    override def hashCode(): Int = {
-      buffer.hashCode()
-    }
+  }
+
+  override def toString: String = {
+    buffer.mkString("Queue(", ", ", ")")
+  }
+
+  override def equals(obj: Any): Boolean = {
+    obj match
+      case cola2: ArrayQueue[T] if (cola2.buffer == this.buffer) => true
+      case _ => false
+  }
+
+  override def hashCode(): Int = {
+    buffer.hashCode()
+  }
 }
 
 @main def testMutableQueue(): Unit = {
