@@ -36,7 +36,11 @@ class EfficientQueue[T] private (private val front: List[T], private val rear: L
 
   override def equals(obj: Any): Boolean = {
     obj match
-      case cola2: EfficientQueue[T] if ((cola2.front:::cola2.rear.reverse) == (this.front:::this.rear.reverse)) => true
+      case cola2: EfficientQueue[T] =>{
+        val aux1=this.front:::this.rear.reverse
+        val aux2=cola2.front:::cola2.rear.reverse
+        aux1==aux2
+      }
       case _ => false
   }
 
@@ -52,6 +56,6 @@ class EfficientQueue[T] private (private val front: List[T], private val rear: L
   assert(squeue.isEmpty, s"{q} should be empty")
   assert(!q.isEmpty, s"{q should not be empty")
   val q2 = EfficientQueue(1, 2, 3, 4)
-  //assert(q == q2, s"${q} and ${q2} should be equal")
+  assert(q == q2, s"${q} and ${q2} should be equal")
   assert(q.hashCode() == q2.hashCode(), s"The hash codes of ${q} and ${q2} should be equal")
 }
