@@ -86,6 +86,28 @@ object Practica1 extends App{
     }
   }
 
+  def generateParentheses(n: Int): List[String] = {
+    @scala.annotation.tailrec
+    def generate(remaining: List[(Int, Int, String)], acc: List[String]): List[String] = {
+      remaining match {
+        case Nil => acc
+        case (open, closed, str) :: rest if open == n && closed == n =>
+          generate(rest, str :: acc)
+        case (open, closed, str) :: rest =>
+          var newStack = rest
+          if (open < n) {
+            newStack = (open + 1, closed, str + "(") :: newStack
+          }
+          if (closed < open) {
+            newStack = (open, closed + 1, str + ")") :: newStack
+          }
+          generate(newStack, acc)
+      }
+    }
+
+    generate(List((0, 0, "")), Nil)
+  }
+
 
   val arr = Array(1, 3, 5, 7, 9, 11)
   println(primeFactors(60)) // Output: List(2, 2, 3, 5)
