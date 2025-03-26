@@ -9,6 +9,17 @@ class Escribir(c: Char) extends Runnable {
  override def run =
   for (i <- 0 until 10) print(c)
 }
+// creacion de hebra que se ejecuta al llemarla dandole un cuerpo-> body:=>Unit
+def log(msg: String): Unit = {
+ println(s"${Thread.currentThread().getName}: $msg")
+}
+def thread(body: => Unit): Thread = {
+ val t = new Thread {
+  override def run() = body
+ }
+ t.start()
+ t
+}
 
 object mainHebra extends App{
  //Creacion de Hebras heredando Thread e implmentando Runnable
@@ -21,4 +32,13 @@ object mainHebra extends App{
  h4.join()    //Metodo de sincronización, espera a que h4 acabe
  Thread.sleep(5000)   //suspender durante 5 seg
  println(Thread.currentThread().getName)   //Devuelve el nombre(puede h.getName) la hebra que se está ejecutando(existe h.setName)
+ //creacion de clase thead
+ val t =  thread{
+  Thread.sleep(1000)
+  log("Una hebra en ejecución")
+  Thread.sleep(1000)
+  log("Aún en ejecución")
+  Thread.sleep(1000)
+  log("Terminado")
+ }
 }
