@@ -19,6 +19,7 @@ class ArrayYColecciones {
     val l = List(1, 2, 3) // si ()-> lista vacia; nil= lista nothin
     val l2 = 1 :: l // une un entero y lista anterior o varios enteros y nil
     val l3 = l ::: l2 // une 2 listas
+    val l4 = l++l2  // mismo pero para todas las colecciones
   }
   
   def set(): Unit = {
