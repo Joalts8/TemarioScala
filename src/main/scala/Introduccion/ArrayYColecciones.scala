@@ -15,6 +15,7 @@ class ArrayYColecciones {
   
   def lista(): Unit = {
     //lista, siempre inmutable sus elementos
+    val r= (0 until 6)// rango, usa foldR y fL igual
     val l = List(1, 2, 3) // si ()-> lista vacia; nil= lista nothin
     val l2 = 1 :: l // une un entero y lista anterior o varios enteros y nil
     val l3 = l ::: l2 // une 2 listas
