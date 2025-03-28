@@ -13,7 +13,7 @@ def inOrder[T](t: Tree[T]): List[T] =
     case Node(e, l, r) => inOrder(l) ::: e :: inOrder(r)
     case Leaf => List()
   }
-/*
+
 def levelOrder[T](tree: Tree[T]): List[T] = {
   @tailrec
   def loop(q: ImmutableQueue[Tree[T]], acc: List[T]): List[T] =
@@ -47,4 +47,4 @@ val t = Node(2,
 @main def testEfficientQueue(): Unit = {
   assert(inOrder(t) == List(2, 7, 5, 6, 11, 2, 5, 4, 9))
   assert(levelOrder(t) == List(2, 7, 5, 2, 6, 9, 5, 11, 4))
-}*/
+}
