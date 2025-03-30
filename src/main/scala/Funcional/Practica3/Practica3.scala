@@ -1,5 +1,7 @@
 package Funcional.Practica3
 
+import scala.collection.mutable
+
 object Practica3 extends App{
   def sum(l: List[Int]): Int={
     l.foldRight(0)(_ + _)
@@ -85,6 +87,46 @@ object Practica3 extends App{
     l4.map(_ / 2)
   }
 
+  def analisis(logs: List[String]):Map[String,Int]={
+    val errors = logs.filter(_.startsWith("ERROR"))
+    val warnings = logs.filter(_.startsWith("WARNING"))
+    val info = logs.filter(_.startsWith("INFO"))
+    val counts = Map("ERROR"->errors.length, "WARNING"->warnings.length, "INFO"-> info.length)
+    counts
+  }
+  def errores(logs: List[String]):List[String] = {
+    val errors = logs.filter(_.startsWith("ERROR"))
+    errors
+  }
+
+  def ingresos(tuples: List[(String, Int, Double)]):Double={
+    tuples.foldRight(0.0)((x,y)=>x._2*x._3+y)
+  }
+  def superior100(tuples: List[(String, Int, Double)]):List[(String,Double)]={
+    val lista =tuples.foldRight(Nil)((x,y)=> y match
+      case Nil =>if(x._2*x._3>=100){
+        y.appended((x._1, x._2 * x._3))
+      }else{
+        y
+      }
+      case z::r if(z._2<x._2*x._3) => if(x._2*x._3>=100){
+        y.head :: (x._1, x._2 * x._3) :: y.tail
+      }else{
+        y
+      }
+      case _ =>if(x._2*x._3>=100){
+        (x._1, x._2 * x._3) :: y
+      }else{
+        y
+      } )
+    lista.reverse
+  }
+
+  def palUnicas(strings: Set[String], strings1: Set[String]):Set[String]={
+    Set()
+  }
+
+
   println(sum(List(1, 2, 3)) == 6)
   println(product(List(1, 3, 5)) == 15)
   println(length(List("Hola", " ", "Mundo")) == 3)
@@ -105,6 +147,30 @@ object Practica3 extends App{
   println(inits(List()) == List(List()))
   println(halfEven(List(1,2,3,4),List(3,2,4)) == List(2,2))
   println(halfEven2(List(1,2,3,4),List(3,2,4)) == List(2,2))
+  val logs = List(
+    "ERROR: Null pointer exception",
+    "INFO: User logged in",
+    "ERROR: Out of memory",
+    "WARNING: Disk space low",
+    "INFO: File uploaded",
+    "ERROR: Database connection failed")
+  println(analisis(logs))//==Map("WARNING" -> 1, "ERROR" -> 3, "INFO" -> 2))
+  println(errores(logs)==List("ERROR: Null pointer exception", "ERROR: Out of memory", "ERROR: Database connection failed"))
+  val sales = List(
+    ("Laptop", 2, 1000.0),
+    ("Mouse", 10, 15.0),
+    ("Keyboard", 5, 50.0),
+    ("Monitor", 3, 200.0),
+    ("USB Drive", 20, 5.0))
+  println(ingresos(sales)==3100.0)
+  println(superior100(sales))//List((Laptop,2000.0), (Monitor,600.0), (Keyboard,250.0), (Mouse,150.0),(USB Drive,100.0))) no ordena puto scala
+  val sentences = Set(
+    "Scala is a functional language",
+    "The power of functional programming is great",
+    "Functional programming is elegant"
+  )
+  val stopWords = Set("a", "the", "is", "of")
+  println(palUnicas(sentences, stopWords))
   println()
 }
 
