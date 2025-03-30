@@ -109,8 +109,8 @@ object Practica3 extends App{
       }else{
         y
       }
-      case z::r if(z._2<x._2*x._3) => if(x._2*x._3>=100){
-        y.head :: (x._1, x._2 * x._3) :: y.tail
+      case (z1,z2)::r if(z2<x._2*x._3) => if(x._2*x._3>=100){
+        (z1,z2) :: (x._1, x._2 * x._3) :: r
       }else{
         y
       }
