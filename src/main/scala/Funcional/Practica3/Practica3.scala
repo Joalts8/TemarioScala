@@ -123,7 +123,12 @@ object Practica3 extends App{
   }
 
   def palUnicas(strings: Set[String], strings1: Set[String]):Set[String]={
-    Set()
+    var set1 = Set(): Set[String]
+    for(i<-strings){
+      val s=i.split(" ")
+      set1= s.foldRight(set1)((x, y)=>y+x.toLowerCase)
+    }
+    strings1.foldRight(set1)((x,y)=>y-x)
   }
 
 
