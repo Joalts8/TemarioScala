@@ -103,23 +103,12 @@ object Practica3 extends App{
     tuples.foldRight(0.0)((x,y)=>x._2*x._3+y)
   }
   def superior100(tuples: List[(String, Int, Double)]):List[(String,Double)]={
-    val lista =tuples.foldRight(Nil)((x,y)=> y match
-      case Nil =>if(x._2*x._3>=100){
+    val lista =tuples.foldRight(Nil)((x,y)=> if(x._2*x._3>=100){
         y.appended((x._1, x._2 * x._3))
       }else{
         y
-      }
-      case (z1,z2)::r if(z2<x._2*x._3) => if(x._2*x._3>=100){
-        (z1,z2) :: (x._1, x._2 * x._3) :: r
-      }else{
-        y
-      }
-      case _ =>if(x._2*x._3>=100){
-        (x._1, x._2 * x._3) :: y
-      }else{
-        y
-      } )
-    lista.reverse
+      })
+    lista.sortBy(_._2).reverse
   }
 
   def palUnicas(strings: Set[String], strings1: Set[String]):Set[String]={
@@ -195,7 +184,7 @@ object Practica3 extends App{
     ("Monitor", 3, 200.0),
     ("USB Drive", 20, 5.0))
   println(ingresos(sales)==3100.0)
-  println(superior100(sales))//List((Laptop,2000.0), (Monitor,600.0), (Keyboard,250.0), (Mouse,150.0),(USB Drive,100.0))) no ordena puto scala
+  println(superior100(sales)==List(("Laptop",2000.0), ("Monitor",600.0), ("Keyboard",250.0), ("Mouse",150.0),("USB Drive",100.0)))
 
   val sentences = Set(
     "Scala is a functional language",
