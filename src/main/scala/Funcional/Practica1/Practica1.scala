@@ -104,7 +104,6 @@ object Practica1 extends App{
           generate(newStack, acc)
       }
     }
-
     generate(List((0, 0, "")), Nil)
   }
 
