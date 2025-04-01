@@ -131,27 +131,53 @@ object Practica3 extends App{
     strings1.foldRight(set1)((x,y)=>y-x)
   }
 
+  def cuentaPal(strings: List[String]):Map[String,Int]={
+    strings.foldRight(Map():Map[String,Int])((x,y)=> if(y.contains(x)){
+      y.updated(x,(y(x)+1))
+    }else{
+      y+(x->1)
+    })
+  }
+
+  def mergeMap(map1: Map[String, Int], map2: Map[String, Int]):Map[String, Int]={
+    map1.foldRight(map2)((x,y)=> if(y.contains(x._1)){
+      y.updated(x._1,(y(x._1)+x._2))
+    }else{
+      y+x
+    })
+  }
+
 
   println(sum(List(1, 2, 3)) == 6)
   println(product(List(1, 3, 5)) == 15)
   println(length(List("Hola", " ", "Mundo")) == 3)
+
   println(reverse(List(1,2,3)) == List(3,2,1))
   println(append(List(1,2,3),List(1,2)) == List(1,2,3,1,2))
+
   println(existe(List(1,2,3),_>2) == true)
   println(existe(List("Hola", " ", "Mundo"),_.length>=5) == true)
   println(existe(List("Hola", "Mundo"),_.length<3) == false)
+
   println(f(List(1,-2,3,-4,-5,6)) == List(2,4,5))
   println(f2(List(1,-2,3,-4,-5,6)) == List(2,4,5))
+
   println(unzip(List((1,'a'),(2,'b'),(3,'c'))) == (List(1,2,3), List('a','b','c')))
+
   println(compose(List[Int => Int](Math.pow(_,2).toInt, _+2), 5) == 49)
+
   println(remdups(List(1,1,3,3,3,2,1,2,2,1,2)) == List(1, 3, 2, 1, 2, 1, 2))
+
   println(fibonnaci(5) == 5)
   println(fibonnaci(10) == 55)
+
   println(inits(List(1,2,3)) == List(List(),List(1),List(1,2),List(1,2,3)))
   println(inits(List(3)) == List(List(),List(3)))
   println(inits(List()) == List(List()))
+
   println(halfEven(List(1,2,3,4),List(3,2,4)) == List(2,2))
   println(halfEven2(List(1,2,3,4),List(3,2,4)) == List(2,2))
+
   val logs = List(
     "ERROR: Null pointer exception",
     "INFO: User logged in",
@@ -159,8 +185,9 @@ object Practica3 extends App{
     "WARNING: Disk space low",
     "INFO: File uploaded",
     "ERROR: Database connection failed")
-  println(analisis(logs))//==Map("WARNING" -> 1, "ERROR" -> 3, "INFO" -> 2))
+  println(analisis(logs)==Map("WARNING" -> 1, "ERROR" -> 3, "INFO" -> 2))
   println(errores(logs)==List("ERROR: Null pointer exception", "ERROR: Out of memory", "ERROR: Database connection failed"))
+
   val sales = List(
     ("Laptop", 2, 1000.0),
     ("Mouse", 10, 15.0),
@@ -169,24 +196,18 @@ object Practica3 extends App{
     ("USB Drive", 20, 5.0))
   println(ingresos(sales)==3100.0)
   println(superior100(sales))//List((Laptop,2000.0), (Monitor,600.0), (Keyboard,250.0), (Mouse,150.0),(USB Drive,100.0))) no ordena puto scala
+
   val sentences = Set(
     "Scala is a functional language",
     "The power of functional programming is great",
-    "Functional programming is elegant"
-  )
+    "Functional programming is elegant")
   val stopWords = Set("a", "the", "is", "of")
-  println(palUnicas(sentences, stopWords))
-  println()
+  println(palUnicas(sentences, stopWords)==Set("programming", "language", "scala", "power", "elegant", "functional", "great"))
+
+  val words = List("scala", "is", "awesome", "scala", "functional", "scala", "is", "great")
+  println(cuentaPal(words)==Map("is" -> 2, "awesome" -> 1, "scala" -> 3, "functional" -> 1, "great" -> 1))
+
+  val warehouse1 = Map("laptop" -> 5, "mouse" -> 20, "keyboard" -> 10)
+  val warehouse2 = Map("laptop" -> 3, "mouse" -> 15, "monitor" -> 8)
+  println(mergeMap(warehouse1,warehouse2)==Map("laptop" -> 8, "mouse" -> 35, "keyboard" -> 10, "monitor" -> 8))
 }
-
-
-/*def foldRight[B](acc:B)(f:(A,B)=>B):B = l match
- case Nil => acc
- case a::r => f(a,r.foldRight(acc)(f))
-
-def foldLeft[B](acc:B)(f:(B,A)=>B):B = l match
- case Nil => acc
- case a::r => r.foldLeft(f(acc,a))(f)
-
-println()
- */
