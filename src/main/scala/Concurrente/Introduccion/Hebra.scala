@@ -9,7 +9,7 @@ class Escribir(c: Char) extends Runnable {
  override def run =
   for (i <- 0 until 10) print(c)
 }
-// creacion de hebra que se ejecuta al llemarla dandole un cuerpo-> body:=>Unit
+// creacion de hebra que se ejecuta al llemarla dandole un cuerpo-> body:=>Unit   **IMPORTANTE**
 def log(msg: String): Unit = {
  println(s"${Thread.currentThread().getName}: $msg")
 }

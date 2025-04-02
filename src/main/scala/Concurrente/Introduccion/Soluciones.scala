@@ -45,6 +45,12 @@ class JardinesContadorSol {
 }
 
 //Alg Panaderia-> Para +2 procesos-> se tiene N, un array=0 y otro =false de n long-> mirar abajo
+//preprotocolo-> procesos.entering(i) = true; procesos.number(i) = (1 to procesos.numProcesses).max + 1; procesos.entering(i) = false
+// comprovacion-> for (j <- 0 until procesos.numProcesses) {while (procesos.entering(j)) Thread.sleep(0);
+//          while (procesos.number(j) != 0 && (procesos.number(i) > procesos.number(j) || (procesos.number(i) == procesos.number(j) && i > j))) Thread.sleep(0)}
+// postprotocolo->  procesos.number(i) = 0
+
+  //Ejemplo-> explicacion
 class BakeryAlgorithm {
   val numProcesses = 3
   @volatile var number = Array.fill(numProcesses)(0) // Número de turno para cada proceso
@@ -70,11 +76,12 @@ object MainSol {
     // se crean los 2 procesos de forma opuesta
     val cont = new JardinesContadorSol
     val puerta1 = thread(for (i <- 0 until 100) {
-      cont.f1 = true
-      cont.turno = 2
+      cont.f1 = true//quiere entrar
+      cont.turno = 2//da turno al 2o por si quiere entrer
+      //comprueba si alguien esta en zona critica
       while (cont.f2 && cont.turno == 2) Thread.sleep(0)
-      cont.inc
-      cont.f1 = false
+      cont.inc//zona critica
+      cont.f1 = false//Postprotocolo
     })
     val puerta2 = thread(for (i <- 0 until 100) {
       cont.f2 = true
@@ -92,20 +99,19 @@ object MainSol {
 object mainPan extends App {
   val procesos = new BakeryAlgorithm()
   for (i <- 0 until procesos.numProcesses) {
-    val p = thread {
+    val p = thread {//Preprotocolo
       procesos.entering(i) = true //intento de entrar
       procesos.number(i) = (1 to procesos.numProcesses).max + 1 // Toma el siguiente número disponible
-      procesos.entering(i) = false
-      // Paso 2: Esperar el turno según el número asignado
+      procesos.entering(i) = false //ya asignado su turno, espera
+      // Paso 2: Esperar el turno según el número asignado-> otro proceso esta asignando su numero/ tiene un num menor
       for (j <- 0 until procesos.numProcesses) {
-        // Espera si otro proceso tiene un número menor o igual/ si el proceso j está asignando un número
         while (procesos.entering(j)) Thread.sleep(0)
         while (procesos.number(j) != 0 && (procesos.number(i) > procesos.number(j) || (procesos.number(i) == procesos.number(j) && i > j))) Thread.sleep(0)
       }
       // Paso 3: Está en la sección crítica
       println(s"Proceso $i está en la sección crítica.")
       Thread.sleep(1000)
-      // Paso 4: Sale de la sección crítica
+      // Paso 4: Postprotocolo
       println(s"Proceso $i ha terminado en la sección crítica.")
       procesos.number(i) = 0
     }
