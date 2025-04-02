@@ -30,8 +30,10 @@ object ProdConsVariableSol {
  }
 }*/
 
-//Peterson-> EMEA q satisface 4.Justicia-> si ambos procesos quieren entrar simultáneamente, entra uno y despues otro. Es solo para 2 procesos y:
+//Peterson-> EMEA q satisface 4.Justicia-> si ambos procesos quieren entrar simultáneamente, entra uno y despues otro. Es solo para 2 procesos
+//f1 y f2 = false (si quieren entrar) y turno =1-> Volatile var       Cada proceso se declara con las var opuestas:
 //preprotocolo-> cont.f1 = true; cont.turno = 2;  while (cont.f2 && cont.turno == 2) Thread.sleep(0)      postprotocolo->  cont.f1 = false
+
 //Solucion de Jardines por Peterson-> mirar abajo
 class JardinesContadorSol {
   @volatile private var n = 0;
@@ -42,11 +44,11 @@ class JardinesContadorSol {
   def num: Int = n;
 }
 
-//Alg Panaderia-> Para +2 procesos-> se tiene N, un array=0 y otro =false de n long
+//Alg Panaderia-> Para +2 procesos-> se tiene N, un array=0 y otro =false de n long-> mirar abajo
 class BakeryAlgorithm {
   val numProcesses = 3
-  var number = Array.fill(numProcesses)(0) // Número de turno para cada proceso
-  var entering = Array.fill(numProcesses)(false) // Indica si un proceso está intentando entrar
+  @volatile var number = Array.fill(numProcesses)(0) // Número de turno para cada proceso
+  @volatile var entering = Array.fill(numProcesses)(false) // Indica si un proceso está intentando entrar
 }
 
 
@@ -65,6 +67,7 @@ object mainProductorConsumidorSol extends App {
 
 object MainSol {
   def main(args:Array[String]) = {
+    // se crean los 2 procesos de forma opuesta
     val cont = new JardinesContadorSol
     val puerta1 = thread(for (i <- 0 until 100) {
       cont.f1 = true
