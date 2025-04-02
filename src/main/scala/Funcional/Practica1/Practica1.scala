@@ -37,8 +37,7 @@ object Practica1 extends App{
       case (a,b)::r=> {val t=unzip(r)
       (a::t._1,b::t._2)
       }
-  }
-
+  }//unzippl y pr German
   def unzipl[A, B](lista: List[(A, B)]): (List[A], List[B]) = lista match
       case Nil => (Nil, Nil) // Si no hay listas devolvemos un par de listas vacías
       case (a, b) :: r =>
@@ -101,7 +100,7 @@ object Practica1 extends App{
     }
   }
 
-  def generateParentheses(n: Int): List[String] = {
+  def generateParentheses(n: Int): List[String] = {//felix
     @scala.annotation.tailrec
     def generate(remaining: List[(Int, Int, String)], acc: List[String]): List[String] = {
       remaining match {
