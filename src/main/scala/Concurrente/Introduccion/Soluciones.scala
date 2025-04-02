@@ -29,9 +29,9 @@ object ProdConsVariableSol {
     SNC0              //seccion no critica
  }
 }*/
+
 //Peterson-> EMEA q satisface 4.Justicia-> si ambos procesos quieren entrar simultáneamente, entra uno y despues otro. Es solo para 2 procesos y:
 //preprotocolo-> cont.f1 = true; cont.turno = 2;  while (cont.f2 && cont.turno == 2) Thread.sleep(0)      postprotocolo->  cont.f1 = false
-
 //Solucion de Jardines por Peterson-> mirar abajo
 class JardinesContadorSol {
   @volatile private var n = 0;
@@ -40,6 +40,13 @@ class JardinesContadorSol {
   @volatile var turno=1
   def inc = n += 1
   def num: Int = n;
+}
+
+//Alg Panaderia-> Para +2 procesos-> se tiene N, un array=0 y otro =false de n long
+class BakeryAlgorithm {
+  val numProcesses = 3
+  var number = Array.fill(numProcesses)(0) // Número de turno para cada proceso
+  var entering = Array.fill(numProcesses)(false) // Indica si un proceso está intentando entrar
 }
 
 
@@ -76,5 +83,28 @@ object MainSol {
     puerta1.join();
     puerta2.join();
     log(s"valor num = ${cont.num}")
+  }
+}
+
+object mainPan extends App {
+  val procesos = new BakeryAlgorithm()
+  for (i <- 0 until procesos.numProcesses) {
+    val p = thread {
+      procesos.entering(i) = true //intento de entrar
+      procesos.number(i) = (1 to procesos.numProcesses).max + 1 // Toma el siguiente número disponible
+      procesos.entering(i) = false
+      // Paso 2: Esperar el turno según el número asignado
+      for (j <- 0 until procesos.numProcesses) {
+        // Espera si otro proceso tiene un número menor o igual/ si el proceso j está asignando un número
+        while (procesos.entering(j)) Thread.sleep(0)
+        while (procesos.number(j) != 0 && (procesos.number(i) > procesos.number(j) || (procesos.number(i) == procesos.number(j) && i > j))) Thread.sleep(0)
+      }
+      // Paso 3: Está en la sección crítica
+      println(s"Proceso $i está en la sección crítica.")
+      Thread.sleep(1000)
+      // Paso 4: Sale de la sección crítica
+      println(s"Proceso $i ha terminado en la sección crítica.")
+      procesos.number(i) = 0
+    }
   }
 }
