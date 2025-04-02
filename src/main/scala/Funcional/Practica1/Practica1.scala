@@ -39,6 +39,23 @@ object Practica1 extends App{
       }
   }
 
+  def unzipr[A, B](lista: List[(A, B)]): (List[A], List[B]) =
+      def bucle(lista: List[(A, B)], acca: List[A], accb: List[B]): (List[A], List[B]) = lista match
+        case Nil => (acca, accb)
+        case (a, b) :: r =>
+          bucle(r, acca, accb)
+
+      bucle(lista, List(), List())
+  }
+  def unzipr[A, B](lista: List[(A, B)]): (List[A], List[B]) ={
+      def bucle(lista: List[(A, B)], acca: List[A], accb: List[B]): (List[A], List[B]) = lista match
+        case Nil => (acca, accb)
+        case (a, b) :: r =>
+          bucle(r, acca, accb)
+
+      bucle(lista, List(), List())
+  }   
+
   def zip(t:(List[Int],List[Char])):List[(Int,Char)]={
     t match
       case (Nil, Nil) => Nil
