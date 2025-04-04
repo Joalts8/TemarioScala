@@ -38,7 +38,7 @@ object Ejercicios extends App {
     l.foldRight(false)((x, y) => y || f(x))
   }
   //println(existe(List("Hola","Mundo"),_.length<3))
-
+//Comeme el culo
   //Ejercicio 4
   /*
     def f(l: List[Int]): List[Int] = {
