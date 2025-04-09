@@ -52,7 +52,7 @@ class JardinesContadorSol {
 
   //Ejemplo-> explicacion
 class BakeryAlgorithm {
-  val numProcesses = 3
+  val numProcesses = 3//Se puede borrar sustituyendo por number.length
   @volatile var number = Array.fill(numProcesses)(0) // Número de turno para cada proceso
   @volatile var entering = Array.fill(numProcesses)(false) // Indica si un proceso está intentando entrar
 }

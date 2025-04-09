@@ -1,5 +1,6 @@
 package Concurrente.Introduccion.Practica4
 
+@volatile val turno = 0
 class EJ1(c:Char, t:Int) extends Thread{
   override def run()={
     for(i<-0 until t){
@@ -18,6 +19,7 @@ class EJ1b(id:Int, c: Char, t: Int) extends Thread {
 }
 
 object salida extends App{
+ 
   val hilo1=new EJ1('A',3)
   val hilo2=new EJ1('B', 5)
   val hilo3=new EJ1('C',9)
