@@ -29,7 +29,7 @@ def ExclusionMutua2 = {
   }
 }
 
-def ExclusionMutuaN = {//N->Numero procesos  m<N-> Hilos al mismo tiempo
+def ExclusionMutuaN = {//N->Numero procesos  m<N-> Hilos al mismo tiempo-> deberia ser 1
   val s = new Semaphore(m)
   val p = new Array[Thread](N)
   for (i <- 0 until p.length)

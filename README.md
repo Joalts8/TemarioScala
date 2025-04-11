@@ -12,6 +12,6 @@ Holiwi
 ### Semaforos
 -Introducción-> Hebra+Soluciones(Espera Activa + Exclusion Mutua-> Peterson y ALG Panaderia)
 
--Semaforos-> Introducción(Explicación+Exclusion Mutua)
+-Semaforos-> Introducción(Explicación+Exclusion Mutua)+ VariosSem
 
 ### Monitores
