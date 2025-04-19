@@ -23,7 +23,16 @@ class EJ1b(id:Int, c: Char, t: Int) extends Thread {
 }
 
 def periodico(t: Long)(b: => Unit): Thread={
-
+  val th = new Thread {
+    override def run() ={
+      while (true) {
+        b
+        Thread.sleep(t)
+      }
+    }
+  }
+  th.start()//esto puede NO estar aqui y usarse como hilo normal pero con el bucle
+  th
 }
 
 
@@ -38,5 +47,9 @@ def periodico(t: Long)(b: => Unit): Thread={
   val hilo2b = new EJ1b(1,'B', 6)
   val hilo3b = new EJ1b(2,'C', 9)
   hilo1b.start();hilo2b.start();hilo3b.start()
+}
 
+@main def EJ2bMain = {
+  val hilo1 = periodico(1000)(println("Hello "))
+  val hilo2= periodico(3000)(println("World "))
 }
