@@ -4,7 +4,6 @@ package Concurrente.Introduccion
 class Hebra extends Thread {
   override def run() = println("Hola Mundo")
 }
-
 //Hebra implementando la interfaz Runnable-> da metodo run
 class Escribir(c: Char) extends Runnable {
   override def run =
@@ -22,6 +21,17 @@ def thread(body: => Unit): Thread = {
   t.start()
   t
 }
+//hilo q se ejecuta en bucle cada t tiempo(si t=0, se puede eliminar sleep), se puede implementar sobre el anterior
+def periodico(t: Long)(b: => Unit): Thread = {
+ new Thread {
+  override def run() = {
+   while (true) {
+    b
+    Thread.sleep(t)
+   }
+  }
+ }
+}
 
 
 @main def MainHebra = {
@@ -35,6 +45,7 @@ def thread(body: => Unit): Thread = {
  h4.join() //Metodo de sincronización, espera a que h4 acabe
  Thread.sleep(5000) //suspender durante 5 seg
  println(Thread.currentThread().getName) //Devuelve el nombre(puede h.getName) la hebra que se está ejecutando(existe h.setName)
+ 
  //creacion de clase thead la hace start directo
  val t = thread {
   Thread.sleep(1000)
@@ -44,4 +55,7 @@ def thread(body: => Unit): Thread = {
   Thread.sleep(1000)
   log("Terminado")
  }
+ val hilo1 = periodico(1000)(println("Hello "))
+ val hilo2 = periodico(3000)(println("World "))
+ hilo1.start();hilo2.start()
 }
