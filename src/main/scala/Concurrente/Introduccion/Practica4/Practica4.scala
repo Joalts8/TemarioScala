@@ -49,7 +49,7 @@ def periodico(t: Long)(b: => Unit): Thread={
   hilo1b.start();hilo2b.start();hilo3b.start()
 }
 
-@main def EJ2bMain = {
-  val hilo1 = periodico(1000)(println("Hello "))
-  val hilo2= periodico(3000)(println("World "))
+@main def EJ2Main = {
+  periodico(1000)(println("Hello "))
+  periodico(3000)(println("World "))
 }
