@@ -6,6 +6,8 @@ import scala.util.Random
 @volatile var turno = 0
 @volatile var iter=0
 @volatile var lista:List[Boolean]=Nil
+@volatile var lista2: List[Int] = Nil
+
 class EJ1(c:Char, t:Int) extends Thread{
   override def run()={
     for(i<-0 until t){
@@ -96,6 +98,42 @@ def fibonacci(n: Int): (Int, Int)={
   resA
 }
 
+def mezclar(l1: List[Int], l2: List[Int]): List[Int]={
+  var list:List[Int]=List()
+  var i=0
+  var j=0
+  while(i<l1.length && j<l2.length){
+    if(l1(i)<=l2(j)){
+      list=list.appended(l1(i))
+      i+=1
+    }else{
+      list=list.appended(l2(j))
+      j+=1
+    }
+  }
+  for (cont <- i until l1.length) {
+    list=list.appended(l1(i))
+    i += 1
+  }
+  for (cont <- j until l2.length) {
+    list=list.appended(l2(j))
+    j += 1
+  }
+  list
+}
+def ordenar(l: List[Int]): List[Int]={
+  if(l.length<=1){
+    log(s"Devuelve $l")
+    l
+  }else{
+    val par=l.splitAt(l.length/2)
+    val parSort=parallel(ordenar(par._1),ordenar(par._2))
+    val lS=mezclar(parSort._1,parSort._2)
+    log(s"Mezcla $lS")
+    lS
+  }
+}
+
 
 @main def EJ1Main = {
   val hilo1=new EJ1('A',3)
@@ -127,4 +165,10 @@ def fibonacci(n: Int): (Int, Int)={
 
 @main def EJ4Main = {
   fibonacci(7)
+}
+
+@main def EJ5Main = {
+  lista2=List.fill(Random.nextInt(10))(Random.nextInt(100))
+  println(lista2)
+  ordenar(lista2)
 }
