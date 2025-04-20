@@ -77,6 +77,25 @@ def todosTrueThread(inic: Int, fin: Int): Boolean = {
   par._1 && par._2
 }
 
+def fibonacci(n: Int): (Int, Int)={
+  if(n<1) then throw new RuntimeException("Numero debasiado pequeño")
+  var resA: (Int,Int) = null.asInstanceOf[(Int,Int)]
+  val h=thread(
+    if(n==1){
+      log(s"fib(0)=0")
+      log("fib(1)=1")
+      resA=(1,0)
+    }else{
+      val par= fibonacci(n-1)
+      val nuevo=par._1+par._2
+      log(s"fib($n)=$nuevo")
+      resA = (nuevo, par._1)
+    }
+  )
+  h.join()
+  resA
+}
+
 
 @main def EJ1Main = {
   val hilo1=new EJ1('A',3)
@@ -104,4 +123,8 @@ def todosTrueThread(inic: Int, fin: Int): Boolean = {
   println(todosTrueIter(0,max))
   println(todosTrueRecu(0,max))
   println(todosTrueThread(0,max))
+}
+
+@main def EJ4Main = {
+  fibonacci(7)
 }
