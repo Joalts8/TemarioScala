@@ -1,7 +1,11 @@
 package Concurrente.Introduccion.Practica4
+import Concurrente.Introduccion.*
+
+import scala.util.Random
 
 @volatile var turno = 0
 @volatile var iter=0
+@volatile var lista:List[Boolean]=Nil
 class EJ1(c:Char, t:Int) extends Thread{
   override def run()={
     for(i<-0 until t){
@@ -35,6 +39,44 @@ def periodico(t: Long)(b: => Unit): Thread={
   th
 }
 
+def parallel[A, B](a: => A, b: => B): (A, B)={
+  var resA: A = null.asInstanceOf[A]
+  var resB: B = null.asInstanceOf[B]
+  val h1= new Thread{
+    override def run(): Unit ={
+      resA=a
+    }
+  }
+  val h2=new Thread{
+    override def run(): Unit ={
+      resB=b
+    }
+  }
+  h1.start();h2.start()
+  h1.join();h2.join()
+  (resA,resB)
+}
+def todosTrueIter(inic: Int, fin: Int): Boolean={
+  for(i<- inic until fin){
+    if(lista(i)==false) then return false
+  }
+  true
+}
+def todosTrueRecu(inic: Int, fin: Int): Boolean = {
+  if(inic==fin){
+    true
+  }else if(lista(inic)==false){
+    false
+  }else{
+    todosTrueRecu(inic+1,fin)
+  }
+}
+def todosTrueThread(inic: Int, fin: Int): Boolean = {
+  val mid= inic+fin/2
+  val par= parallel(todosTrueIter(inic,mid),todosTrueRecu(mid,fin))
+  par._1 && par._2
+}
+
 
 @main def EJ1Main = {
   val hilo1=new EJ1('A',3)
@@ -52,4 +94,14 @@ def periodico(t: Long)(b: => Unit): Thread={
 @main def EJ2Main = {
   periodico(1000)(println("Hello "))
   periodico(3000)(println("World "))
+}
+
+@main def EJ3Main = {
+  println(parallel(3+2,"Hello "+"World"))
+  //lista=List(true,true,true)
+  lista=List.fill(Random.nextInt(10))(Random.nextBoolean())
+  val max= lista.length
+  println(todosTrueIter(0,max))
+  println(todosTrueRecu(0,max))
+  println(todosTrueThread(0,max))
 }
