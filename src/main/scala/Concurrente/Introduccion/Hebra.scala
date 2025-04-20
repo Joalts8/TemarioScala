@@ -21,9 +21,9 @@ def thread(body: => Unit): Thread = {
   t.start()
   t
 }
-//hilo q se ejecuta en bucle cada t tiempo(si t=0, se puede eliminar sleep), se puede implementar sobre el anterior
+//hilo q se ejecuta en bucle cada t tiempo(si t=0, se puede eliminar sleep), se puede implementar sobre el anterior(crear val;start;dev val)
 def periodico(t: Long)(b: => Unit): Thread = {
- new Thread {
+ new Thread {                 //sirve thread(while (true) { b;Thread.sleep(t)}); pero haria el start
   override def run() = {
    while (true) {
     b
