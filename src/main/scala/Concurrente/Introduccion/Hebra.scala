@@ -32,6 +32,17 @@ def periodico(t: Long)(b: => Unit): Thread = {
   }
  }
 }
+//hilo qhe debuelve un valor dada una funcion, editable para + fun o ninguna y que devuelva
+def devolver[A](a: => A): A = {
+  var resA: A = null.asInstanceOf[A]
+  val h1 = new Thread {
+    override def run(): Unit = {
+      resA = a
+    }
+  }
+  h1.start(); h1.join()
+    resA
+}
 
 
 @main def MainHebra = {
@@ -58,4 +69,5 @@ def periodico(t: Long)(b: => Unit): Thread = {
  val hilo1 = periodico(1000)(println("Hello "))
  val hilo2 = periodico(3000)(println("World "))
  hilo1.start();hilo2.start()
+  println(devolver("Hello " + "World"))
 }
