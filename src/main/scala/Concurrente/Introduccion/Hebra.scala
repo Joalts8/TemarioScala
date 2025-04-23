@@ -32,7 +32,7 @@ def periodico(t: Long)(b: => Unit): Thread = {
   }
  }
 }
-//hilo qhe debuelve un valor dada una funcion, editable para + fun o ninguna y que devuelva
+//hilo qhe debuelve un valor dada una funcion, editable para + fun-> tupla; o ninguna y que devuelva
 def devolver[A](a: => A): A = {
   var resA: A = null.asInstanceOf[A]
   val h1 = new Thread {           //usable el anterior  thread(resA=a);h1.join
