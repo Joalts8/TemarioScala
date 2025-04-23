@@ -10,8 +10,8 @@ Holiwi
 ---
 ## Concurrencia
 ### Semaforos
--Introducción-> Hebra+Soluciones(Espera Activa + Exclusion Mutua-> Peterson y ALG Panaderia)
+-Introducción-> Hebra(creacion con Thread, Runnable, q se ejecute al momento, bucle inf y devolución)+Soluciones(Espera Activa + Exclusion Mutua-> Peterson y ALG Panaderia)
 
--Semaforos-> Introducción(Explicación+Exclusion Mutua)+ VariosSem
+-Semaforos-> Introducción(Explicación+Exclusion Mutua) + VariosSem(EM con EA) + GeneralBinario(Lo mismo pero sin buffer-> solo con semaforos)
 
 ### Monitores
