@@ -4,7 +4,7 @@ import java.util.concurrent.*
 import Concurrente.Introduccion.*
 import scala.util.Random
 
-//Problema del Productor-Consumidor para el uso de varios Semaforos:
+//Problema del Productor-Consumidor para el uso de varios Semaforos: EM con EA
 
 class Buffer(n: Int) {
   private val b = new Array[Int](n)
