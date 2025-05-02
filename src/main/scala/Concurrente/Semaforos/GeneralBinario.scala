@@ -31,3 +31,4 @@ class GeneralBinario (v:Int){
   }
 }
 
+//Caso donde hay 2 colas-> Cuando se produce el tipo 1, hasta que no se consume, no se produce tipo 2

@@ -3,30 +3,40 @@ package Concurrente.Semaforos.Practica6
 import java.util.concurrent.*
 import scala.util.Random
 object aseo{
-  // CS-Cliente: Esperan si está el Equipo de Limpieza en el aseo
-  // CS-EquipoLimpieza: Espera si hay clientes en el aseo
-  val numClientes=0
-  // ...
+  val Cliente= new Semaphore(1)
+  val EquipoLimpieza= new Semaphore(1)
+  var numClientes=0
+  val mutex= new Semaphore(1)
 
   def entraCliente(id:Int)={
-    // ...
+    Cliente.acquire()
+    mutex.acquire()
+    numClientes+=1
+    if (numClientes==1) EquipoLimpieza.acquire()
     log(s"Entra cliente $id. Hay $numClientes clientes.")
-    // ...
+    mutex.release()
+    Cliente.release()
   }
   def saleCliente(id:Int)={
-    // ...
+    mutex.acquire()
+    numClientes-=1
+    if (numClientes==0) EquipoLimpieza.release()
     log(s"Sale cliente $id. Hay $numClientes clientes.")
-    // ...
+    mutex.release()
   }
   def entraEquipoLimpieza ={
-    // ...
+    mutex.acquire()
+    Cliente.acquire()
+    mutex.release()
+    EquipoLimpieza.acquire()
     log(s"        Entra el equipo de limpieza.")
-    // ...
   }
   def saleEquipoLimpieza = {
-    // ...
+    mutex.acquire()
+    Cliente.release()
+    mutex.release()
+    EquipoLimpieza.release()
     log(s"        Sale el equipo de limpieza.")
-    // ...
   }
 }
 
