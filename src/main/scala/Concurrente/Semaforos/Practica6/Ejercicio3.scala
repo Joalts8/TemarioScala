@@ -5,7 +5,7 @@ import scala.util.Random
 object aseo{
   // CS-Cliente: Esperan si está el Equipo de Limpieza en el aseo
   // CS-EquipoLimpieza: Espera si hay clientes en el aseo
-
+  val numClientes=0
   // ...
 
   def entraCliente(id:Int)={
