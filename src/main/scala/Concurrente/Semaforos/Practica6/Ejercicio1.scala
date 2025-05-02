@@ -4,7 +4,7 @@ import java.util.concurrent.*
 import scala.util.Random
 
 object mediciones {
-  var sensores= Array(new Semaphore(1),new Semaphore(1),new Semaphore(1))
+  var sensores= Array.fill(3)(new Semaphore(1))
   @volatile var almacenado=0
   val almacenar= new Semaphore(1)
   val Trabajador= new Semaphore(0)
@@ -12,7 +12,7 @@ object mediciones {
 
   def nuevaMedicion(id: Int) = {
     sensores(id).acquire()
-    
+
     almacenar.acquire()
     log(s"Sensor $id almacena su medición" )
     almacenado+=1
