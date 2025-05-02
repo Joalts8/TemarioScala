@@ -12,32 +12,32 @@ import java.util.concurrent.*
 
 // Solucion Exclusion mutua 2 y +2 hilos  
 def ExclusionMutua2 = {
-  val s = new Semaphore(1)
+  val mutex = new Semaphore(1)
   val p1 = thread {
     while (true) {
-      s.acquire()
+      mutex.acquire()
       // SC1
-      s.release()
+      mutex.release()
     }
   }
   val p2 = thread {
     while (true) {
-      s.acquire()
+      mutex.acquire()
       // SC2
-      s.release()
+      mutex.release()
     }
   }
 }
 
 def ExclusionMutuaN = {//N->Numero procesos  m<N-> Hilos al mismo tiempo-> deberia ser 1
-  val s = new Semaphore(m)
+  val mutex = new Semaphore(m)
   val p = new Array[Thread](N)
   for (i <- 0 until p.length)
     p(i) = thread {
       while (true) {
-        s.acquire()
+        mutex.acquire()
         // SC
-        s.release()
+        mutex.release()
       }
     }
 }
