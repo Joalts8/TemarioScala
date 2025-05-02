@@ -4,22 +4,35 @@ import java.util.concurrent.*
 import scala.util.Random
 
 class Cadena(n: Int) {
-  // CS-empaquetador-i: espera hasta que hay productos de tipo i
-  // CS-colocador: espera si hay n productos en la cadena
+  var empaquetador= Array.fill(3)(new Semaphore(0))
+  @volatile var libre=n
   private val tipo = Array.fill(3)(0) // el buffer
   private var cuentaTotal = 0
-  private val esperaCol = Semaphore(1) // CS- Colocalor
+  private val esperaCol = Semaphore(1) // CS- Colocalor*
+  val mutex= new Semaphore(1)
+
   def retirarProducto(p: Int) = {
-    // ...
+    empaquetador(p).acquire()
+    mutex.acquire()
     log(s"Empaquetador $p retira un producto. Quedan ${tipo.mkString("[",",","]")}")
-    // ...
-  }
-  def nuevoProducto(p:Int) = {
-    // ...
-    log(s"Colocador pone un producto $p. Quedan ${tipo.mkString("[",",","]")}")
+    cuentaTotal+=1
     log(s"Total de productos empaquetados $cuentaTotal")
-    // ...
+    tipo(p)-=1
+    libre+=1
+    if (tipo(p) >0) empaquetador(p).release()
+    if (libre==1) esperaCol.release()
+    mutex.release()
   }
+
+  def nuevoProducto(p:Int) = {
+    esperaCol.acquire()
+    mutex.acquire()
+    log(s"Colocador pone un producto $p. Quedan ${tipo.mkString("[",",","]")}")
+    tipo(p)+=1
+    libre-=1
+    if(tipo(p)==1)     empaquetador(p).release()
+    if (libre>0)   esperaCol.release()
+    mutex.release()}
 }
 
 object Ejercicio2 {
