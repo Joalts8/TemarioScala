@@ -5,10 +5,10 @@ import scala.util.Random
 
 object gestorAgua {
   private val mutex = new Semaphore(1) //Exclusion mutua
-  private val HFormar = new Semaphore(1) //Exclusion mutua
-  private val HEsperar = new Semaphore(0) //Exclusion mutua
-  private val OFormar = new Semaphore(1) //Exclusion mutua
-  private val OEsperar = new Semaphore(0) //Exclusion mutua
+  private val HFormar = new Semaphore(1) 
+  private val HEsperar = new Semaphore(0)
+  private val OFormar = new Semaphore(1)
+  private val OEsperar = new Semaphore(0)
   private var H=0
 
   def oxigeno(id: Int) = {
