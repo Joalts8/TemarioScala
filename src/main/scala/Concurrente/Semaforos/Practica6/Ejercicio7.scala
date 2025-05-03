@@ -4,26 +4,34 @@ import java.util.concurrent.*
 import scala.util.Random
 
 class Nido(B: Int) {
+  private val mutex = new Semaphore(1) //Exclusion mutua
+  private val bebe = new Semaphore(0)
+  private val padre = new Semaphore(1)
   // CS-bebé i: no puede coger un bichito del plato si está vacío
   // CS-papá/mamá: no puede dejar un bichito en el plato si está lleno
-
   private var plato = 0
-  // ...
 
   def cojoBichito(i: Int) = {
-    // el bebé i coge un bichito del plato
-    // ...
+    bebe.acquire()
+    mutex.acquire()
+    plato-=1
     log(s"Bebé $i coge un bichito. Quedan $plato bichitos")
-    // ...
+    if(plato>0) bebe.release()
+    if (plato==B-1) padre.release()
+    mutex.release()
   }
 
   def pongoBichito(i: Int) = {
-    // el papá/la mamá pone un bichito en el plato (0=papá, 1=mamá)
-    // ...
+    padre.acquire()
+    mutex.acquire()
+    plato+=1
     log(s"Papá $i pone un bichito. Quedan $plato bichitos")
-    // ...
+    if(plato<B) padre.release()
+    if (plato==1)bebe.release()
+    mutex.release()
   }
 }
+
 
 object Ejercicio7 {
   def main(args: Array[String]): Unit =
