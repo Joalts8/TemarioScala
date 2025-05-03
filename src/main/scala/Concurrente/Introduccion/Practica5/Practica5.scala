@@ -68,14 +68,14 @@ object EJ2 {
   }
 }
 
-@main def mainEJ2() = {
+@main def mainEJ2() = {// habria q añadir un sleep random pero me da pereza
   for (i <- 0 until EJ2.numProcesses) {
     if (i < EJ2.rios) {
       val p = thread { //Preprotocolo
         for (k <- 0 until EJ2.aumRio) {
           while (EJ2.nvAgua >= EJ2.nvMax) Thread.sleep(0)
           EJ2.entering(i) = true //intento de entrar
-          EJ2.number(i) = (1 to EJ2.numProcesses).max + 1 // Toma el siguiente número disponible
+          EJ2.number(i) = EJ2.number.max + 1 // Toma el siguiente número disponible
           EJ2.entering(i) = false //ya asignado su turno, espera
           // Paso 2: Esperar el turno según el número asignado-> otro proceso esta asignando su numero/ tiene un num menor
           for (j <- 0 until EJ2.numProcesses) {
@@ -94,7 +94,7 @@ object EJ2 {
         for (k <- 0 until EJ2.disPresa) {
           while (EJ2.nvAgua <= 0) Thread.sleep(0)
           EJ2.entering(i) = true //intento de entrar
-          EJ2.number(i) = (1 to EJ2.numProcesses).max + 1 // Toma el siguiente número disponible
+          EJ2.number(i) = EJ2.number.max + 1 // Toma el siguiente número disponible
           EJ2.entering(i) = false //ya asignado su turno, espera
           // Paso 2: Esperar el turno según el número asignado-> otro proceso esta asignando su numero/ tiene un num menor
           for (j <- 0 until EJ2.numProcesses) {

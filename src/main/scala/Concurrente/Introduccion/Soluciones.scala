@@ -101,7 +101,7 @@ object mainPan extends App {
   for (i <- 0 until procesos.numProcesses) {
     val p = thread {//Preprotocolo
       procesos.entering(i) = true //intento de entrar
-      procesos.number(i) = (1 to procesos.numProcesses).max + 1 // Toma el siguiente número disponible
+      procesos.number(i) = procesos.number.max + 1 // Toma el siguiente número disponible
       procesos.entering(i) = false //ya asignado su turno, espera
       // Paso 2: Esperar el turno según el número asignado-> otro proceso esta asignando su numero/ tiene un num menor
       for (j <- 0 until procesos.numProcesses) {
