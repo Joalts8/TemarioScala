@@ -4,34 +4,38 @@ import java.util.concurrent.*
 import scala.util.Random
 
 object gestorAgua {
-  // CS-Hid1: El hidrógeno que quiere formar una molécula espera si ya hay dos hidrógenos
-  // CS-Hid2: Un hidrógeno debe esperar a los otros dos átomos para formar la molécula
-  // CS-Ox1: El oxígeno que quiere formar una molécula espera si ya hay un oxígeno
-  // CS-Ox2: El oxígeno debe esperar a los otros dos átomos para formar la molécula
-
+  private val mutex = new Semaphore(1) //Exclusion mutua
+  private val HFormar = new Semaphore(1) //Exclusion mutua
+  private val HEsperar = new Semaphore(0) //Exclusion mutua
+  private val OFormar = new Semaphore(1) //Exclusion mutua
+  private val OEsperar = new Semaphore(0) //Exclusion mutua
+  private var H=0
 
   def oxigeno(id: Int) = {
-    // el oxígeno id quiere formar una molécula
-    // ...
+    OFormar.acquire()
     log(s"Oxígeno $id quiere formar una molécula")
-    // ...
-    // log(s"      Molécula formada!!!")
-    // ...
-    // log(s"Sale oxígeno $id: numO: $numO---molecula=${molecula.availablePermits()}")
-    // ...
+    OEsperar.acquire()
+    log(s"      Molécula formada!!!")
+    mutex.acquire()
+    H=0
+    mutex.release()
+    OFormar.release()
+    HFormar.release()
   }
 
   def hidrogeno(id: Int) = {
-    // el hidrógeno id quiere formar una molécula
-    // ...
+    HFormar.acquire()
     log(s"Hidrógeno $id quiere formar una molécula")
-    // ...
-    // log(s"      Molécula formada!!!")
-    // ...
+    mutex.acquire()
+    H+=1
+    if(H<2) HFormar.release()
+    mutex.release()
+    if (H==2) OEsperar.release()
   }
 }
-object Ejercicio5 {
 
+
+object Ejercicio5 {
   def main(args:Array[String]) =
     val N = 5
     val hidrogeno = new Array[Thread](2*N)
