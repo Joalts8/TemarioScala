@@ -17,7 +17,7 @@ class Ejercicio2() {
 
 
 
-object Ejercicio2 {
+object Practica5Ejercicio2Felix {
 
 
 
