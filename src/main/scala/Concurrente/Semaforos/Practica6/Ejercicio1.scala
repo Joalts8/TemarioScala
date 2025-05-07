@@ -6,7 +6,7 @@ import scala.util.Random
 object mediciones {
   var sensores= Array.fill(3)(new Semaphore(1))
   @volatile var almacenado=0
-  val almacenar= new Semaphore(1)
+  val almacenar= new Semaphore(1)   //mutex
   val Trabajador= new Semaphore(0)
 
 
