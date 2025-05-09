@@ -76,6 +76,7 @@ object MainSol {
   def main(args:Array[String]) = {
     // se crean los 2 procesos de forma opuesta
     val cont = new JardinesContadorSol
+
     val puerta1 = thread(for (i <- 0 until 100) {
       cont.f1 = true//quiere entrar
       cont.turno = 2//da turno al 2o por si quiere entrer
@@ -84,6 +85,7 @@ object MainSol {
       cont.inc//zona critica
       cont.f1 = false//Postprotocolo
     })
+
     val puerta2 = thread(for (i <- 0 until 100) {
       cont.f2 = true
       cont.turno = 1
@@ -91,6 +93,7 @@ object MainSol {
       cont.inc
       cont.f2 = false
     })
+
     puerta1.join();
     puerta2.join();
     log(s"valor num = ${cont.num}")
