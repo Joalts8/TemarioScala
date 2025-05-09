@@ -46,7 +46,7 @@ class JardinesContadorSol {
 }
 
 //Alg Panaderia-> Para +2 procesos-> se tiene N, un array=0 y otro =false de n long-> mirar abajo
-//preprotocolo-> procesos.entering(i) = true; procesos.number(i) = (1 to procesos.numProcesses).max + 1; procesos.entering(i) = false
+//preprotocolo-> procesos.entering(i) = true; procesos.number(i) = procesos.number.max + 1; procesos.entering(i) = false
 // comprovacion-> for (j <- 0 until procesos.numProcesses) {while (procesos.entering(j)) Thread.sleep(0);
 //          while (procesos.number(j) != 0 && (procesos.number(i) > procesos.number(j) || (procesos.number(i) == procesos.number(j) && i > j))) Thread.sleep(0)}
 // postprotocolo->  procesos.number(i) = 0
