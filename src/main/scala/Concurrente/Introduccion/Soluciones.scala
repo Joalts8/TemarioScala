@@ -4,7 +4,7 @@ package Concurrente.Introduccion
 object ProdConsVariableSol {
   @volatile private var hayDato = false   //volatile-> escribe en MP=> visible por todas las hebras
   private var valor: Int = 0;
-  
+
   def escribe(nvalor: Int) = {
     while (hayDato) Thread.sleep(0)
     valor = nvalor
@@ -59,7 +59,7 @@ class BakeryAlgorithm {
 }
 
 
-object mainProductorConsumidorSol extends App {
+@main def mainProductorConsumidorSol ={
   val prod = thread {
     for (i <- 0 until 10) {
       ProdConsVariableSol.escribe(i)
@@ -97,7 +97,7 @@ object MainSol {
   }
 }
 
-object mainPan extends App {
+@main def mainPan={
   val procesos = new BakeryAlgorithm()
   for (i <- 0 until procesos.numProcesses) {
     val p = thread {//Preprotocolo
