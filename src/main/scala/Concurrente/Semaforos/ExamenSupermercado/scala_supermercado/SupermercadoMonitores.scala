@@ -1,4 +1,4 @@
-package scala_supermercado
+package Concurrente.Semaforos.ExamenSupermercado.scala_supermercado
 
 class SupermercadoMonitores extends Supermercado {
   private val permanente: Cajero = new Cajero(this, true) // creates the first cashier (permanent)

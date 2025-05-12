@@ -1,4 +1,4 @@
-package scala_supermercado
+package Concurrente.Semaforos.ExamenSupermercado.scala_supermercado
 
 import scala.util.Random
 

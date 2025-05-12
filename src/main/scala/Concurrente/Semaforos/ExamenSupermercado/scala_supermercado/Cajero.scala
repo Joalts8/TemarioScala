@@ -1,7 +1,7 @@
-package scala_supermercado
+package Concurrente.Semaforos.ExamenSupermercado.scala_supermercado
 
-import scala.util.Random
 import java.util.concurrent.atomic.{AtomicBoolean, AtomicInteger}
+import scala.util.Random
 
 class Cajero(mkt: Supermercado, permanente: Boolean) extends Thread {
   private val rnd = new Random()

@@ -1,4 +1,4 @@
-package scala_supermercado
+package Concurrente.Semaforos.ExamenSupermercado.scala_supermercado
 
 trait Supermercado {
   def fin(): Unit
