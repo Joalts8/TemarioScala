@@ -14,4 +14,6 @@ Holiwi
 
 -Semaforos-> Introducción(Explicación+Exclusion Mutua) + VariosSem(EM con EA) + GeneralBinario(Lo mismo pero sin buffer-> solo con semaforos)
 
+-Examenes -> Junio2022(solo hecho con semaforos por ahora)
+
 ### Monitores
