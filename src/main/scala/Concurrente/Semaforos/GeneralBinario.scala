@@ -9,6 +9,8 @@ class GeneralBinario (v:Int){
   private val espera = if (v == 0) new Semaphore(0) else new Semaphore(1) // Semaforo para saber cuentos procesos/consumidores esperan
   private val mutex = new Semaphore(1) //Exclusion mutua
 
+  var varias= Array.fill(3)(new Semaphore(1)) //en ocasiones hay que usar un array de semaforos
+
   //Metodo que añade a espera
   def releaseGen() = {
     //Preprotocolo

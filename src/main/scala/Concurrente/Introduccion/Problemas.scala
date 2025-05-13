@@ -1,6 +1,6 @@
 package Concurrente.Introduccion
 
-//Problema del jarden-> 2 puertas por la que entras visitantes=> la variable se modifica a la vez y no se acctualza bien
+//Problema del jardin-> 2 puertas por la que entras visitantes=> la variable se modifica a la vez y no se acctualza bien
 class JardinesContador {
   private var n = 0;
   def inc = n += 1

@@ -4,6 +4,7 @@ package Concurrente.Introduccion
 object ProdConsVariableSol {
   @volatile private var hayDato = false   //volatile-> escribe en MP=> visible por todas las hebras
   private var valor: Int = 0;
+
   def escribe(nvalor: Int) = {
     while (hayDato) Thread.sleep(0)
     valor = nvalor
@@ -45,7 +46,7 @@ class JardinesContadorSol {
 }
 
 //Alg Panaderia-> Para +2 procesos-> se tiene N, un array=0 y otro =false de n long-> mirar abajo
-//preprotocolo-> procesos.entering(i) = true; procesos.number(i) = (1 to procesos.numProcesses).max + 1; procesos.entering(i) = false
+//preprotocolo-> procesos.entering(i) = true; procesos.number(i) = procesos.number.max + 1; procesos.entering(i) = false
 // comprovacion-> for (j <- 0 until procesos.numProcesses) {while (procesos.entering(j)) Thread.sleep(0);
 //          while (procesos.number(j) != 0 && (procesos.number(i) > procesos.number(j) || (procesos.number(i) == procesos.number(j) && i > j))) Thread.sleep(0)}
 // postprotocolo->  procesos.number(i) = 0
@@ -58,7 +59,7 @@ class BakeryAlgorithm {
 }
 
 
-object mainProductorConsumidorSol extends App {
+@main def mainProductorConsumidorSol ={
   val prod = thread {
     for (i <- 0 until 10) {
       ProdConsVariableSol.escribe(i)
@@ -75,6 +76,7 @@ object MainSol {
   def main(args:Array[String]) = {
     // se crean los 2 procesos de forma opuesta
     val cont = new JardinesContadorSol
+
     val puerta1 = thread(for (i <- 0 until 100) {
       cont.f1 = true//quiere entrar
       cont.turno = 2//da turno al 2o por si quiere entrer
@@ -83,6 +85,7 @@ object MainSol {
       cont.inc//zona critica
       cont.f1 = false//Postprotocolo
     })
+
     val puerta2 = thread(for (i <- 0 until 100) {
       cont.f2 = true
       cont.turno = 1
@@ -90,13 +93,14 @@ object MainSol {
       cont.inc
       cont.f2 = false
     })
+
     puerta1.join();
     puerta2.join();
     log(s"valor num = ${cont.num}")
   }
 }
 
-object mainPan extends App {
+@main def mainPan={
   val procesos = new BakeryAlgorithm()
   for (i <- 0 until procesos.numProcesses) {
     val p = thread {//Preprotocolo
