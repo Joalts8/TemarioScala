@@ -17,3 +17,4 @@ Holiwi
 -Examenes -> Junio2022(solo hecho con semaforos por ahora)
 
 ### Monitores
+-BloquesSinc
