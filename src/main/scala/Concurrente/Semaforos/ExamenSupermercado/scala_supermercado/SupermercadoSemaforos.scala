@@ -8,7 +8,6 @@ class SupermercadoSemaforos extends Supermercado {
   val mutex = new Semaphore(1)
   val mutex2 = new Semaphore(1)
   val cajeros = new Semaphore(0)
-  val mutexCajeros = scala.collection.mutable.ListBuffer[Semaphore]().empty
   var nClientes = 0
   var nCajeros = 0
   permanente.start()
@@ -33,7 +32,6 @@ class SupermercadoSemaforos extends Supermercado {
     if(nClientes > 3*Cajero.numCajeros()) {
       val cajero = new Cajero(this, false)
       val mutexCajero = new Semaphore(0)
-      mutexCajeros += mutexCajero
       nCajeros += 1
       System.out.println(s"---Se crea un cajero nuevo ${cajero.cajeroId()}---")
       cajero.start()
