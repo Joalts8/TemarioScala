@@ -1,7 +1,7 @@
 package Concurrente.Monitores
 import Concurrente.Introduccion.*
 
-//Sirve para usar distintos monitores en el objeto-> más parecido a semaforo
+//Sirve para usar distintas condiciones de block en el objeto-> más parecido a semaforo
 class Condition {
   def cwait() = synchronized {
     wait()
