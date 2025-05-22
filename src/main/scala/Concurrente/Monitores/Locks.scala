@@ -62,3 +62,58 @@ object lectorEscritorLocks {
     }
   }
 }
+
+object barberia {
+  private val l = new ReentrantLock(true)
+  private var bLibre = false // CS1
+  private val cbLibre = l.newCondition()
+  private var sOcupada = false // CS2
+  private val csOcupada = l.newCondition()
+  private var pAbierta = false // CS3
+  private val cpAbierta = l.newCondition()
+  // pAbierta CS4
+  private val cciclo = l.newCondition()
+
+  def pelar(id: Int) = {
+    l.lock()
+    try {
+      while (!bLibre) cbLibre.await()
+      bLibre = false
+      sOcupada = true
+      csOcupada.signal()
+      log(s"El cliente $id se sienta en la silla")
+      while (!pAbierta) cpAbierta.await()
+      log(s"El cliente $id se marcha")
+      pAbierta = false
+      cciclo.signal()
+    } finally {
+      l.unlock()
+    }
+  }
+
+  76
+
+  def siguiente = {
+    l.lock()
+    try {
+      bLibre = true
+      cbLibre.signal()
+      while (!sOcupada) csOcupada.await()
+      sOcupada = false
+      log(s"El barbero pela a un cliente")
+    } finally {
+      l.unlock()
+    }
+  }
+
+  def finPelar() = {
+    l.lock()
+    try {
+      pAbierta = true
+      cpAbierta.signal()
+      while (pAbierta) cciclo.await()
+    } finally {
+      l.unlock()
+    }
+  }
+}
