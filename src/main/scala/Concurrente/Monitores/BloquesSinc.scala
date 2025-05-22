@@ -3,9 +3,9 @@ package Concurrente.Monitores
 class BloquesSinc {
   private var dato = 0
 
-  //Estas funciones hacen exclusion mutua, son lo mismo, pero this puede sustituirse por el lock de otra clase, funciona como un semaforo
+  //Estas funciones hacen exclusion mutua, son lo mismo, pero this puede sustituirse por el monitor(Lock basico) de otra clase, funciona como un semaforo del objeto
   def leer() = synchronized {
-    //wait-> suspende la hebra en la que se encuentre y libera el lock
+    //wait-> suspende la hebra en la que se encuentre y libera el monitor
     if (dato==0) wait()
     dato
   }
