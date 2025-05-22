@@ -63,41 +63,47 @@ object lectorEscritorLocks {
   }
 }
 
+//Ejemplo con la barbería donde se usan mas condiciones y bools para comprobar en vez int
 object barberia {
   private val l = new ReentrantLock(true)
-  private var bLibre = false // CS1
+  private var bLibre = false // Indica si la silla del barbero está libre para sentarse
   private val cbLibre = l.newCondition()
-  private var sOcupada = false // CS2
+  private var sOcupada = false // Indica que un cliente se ha sentado y está esperando pelo
   private val csOcupada = l.newCondition()
-  private var pAbierta = false // CS3
+  private var pAbierta = false // Indica que el barbero ha terminado de pelar
   private val cpAbierta = l.newCondition()
-  // pAbierta CS4
+  // pAbierta   coordinar el reinicio de ciclo
   private val cciclo = l.newCondition()
 
   def pelar(id: Int) = {
     l.lock()
     try {
+      //1) Esperar a que la silla del barbero esté libre
       while (!bLibre) cbLibre.await()
       bLibre = false
+      // 2) Avisar que la silla ya está ocupada
       sOcupada = true
       csOcupada.signal()
       log(s"El cliente $id se sienta en la silla")
+      // 3) Esperar a que el barbero termine de pelar
       while (!pAbierta) cpAbierta.await()
       log(s"El cliente $id se marcha")
+      // 4) Cerrar el paso y despertar al barbero para el siguiente ciclo
       pAbierta = false
       cciclo.signal()
+
     } finally {
       l.unlock()
     }
   }
 
-  76
-
   def siguiente = {
     l.lock()
     try {
+      // 1) Avisar que la silla está libre
       bLibre = true
       cbLibre.signal()
+      // 2) Esperar a que un cliente ocupe la silla
       while (!sOcupada) csOcupada.await()
       sOcupada = false
       log(s"El barbero pela a un cliente")
@@ -109,8 +115,10 @@ object barberia {
   def finPelar() = {
     l.lock()
     try {
+      // 1) Avisar al cliente que ya ha terminado
       pAbierta = true
       cpAbierta.signal()
+      // 2) Esperar a que el cliente salga y restablezca pAbierta = false
       while (pAbierta) cciclo.await()
     } finally {
       l.unlock()
