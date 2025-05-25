@@ -1,37 +1,56 @@
 package Concurrente.Monitores.Practica7
 
+import java.util.concurrent.locks.ReentrantLock
 import scala.util.Random
 
 class Coche(C:Int) extends Thread{
-  //CS-pasajero1: si el coche está lleno, un pasajero no puede subir al coche hasta que haya terminado
-  //el viaje y se hayan bajado los pasajeros de la vuelta actual
-  //CS-pasajero2: un pasajero que está en el coche no se puede bajarse hasta que haya terminado el viaje
-  //CS-coche: el coche espera a que se hayan subido C pasajeros para dar una vuelta
+  private val l = new ReentrantLock(true)
+  private val llenar= l.newCondition()
+  private val bajar= l.newCondition()
+  private val paseo= l.newCondition()
   private var numPas = 0
-  
-
 
   def nuevoPaseo(id:Int)= {
     //el pasajero id  quiere dar un paseo en la montaña rusa
-    
+    l.lock()
+    try {
+      if (numPas==C)paseo.await()
+      numPas+=1
+      log(s"El pasajero $id se sube al coche. Hay $numPas pasajeros.")
+      if(numPas==C) llenar.signal()
+      bajar.await()
+      numPas-=1
+      log(s"El pasajero $id se baja del coche. Hay $numPas pasajeros.")
+      if(numPas==0) paseo.signalAll()
+    } finally {
+      l.unlock()
+    }
 
-    log(s"El pasajero $id se sube al coche. Hay $numPas pasajeros.")
 
-   
-    log(s"El pasajero $id se baja del coche. Hay $numPas pasajeros.")
    
   }
 
   def esperaLleno =  {
     //el coche espera a que se llene para dar un paseo
-    
-    log(s"        Coche lleno!!! empieza el viaje....")
+    l.lock()
+    try {
+      if (numPas<C)llenar.await()
+      log(s"        Coche lleno!!! empieza el viaje....")
+    } finally {
+      l.unlock()
+    }
+
   }
 
   def finViaje =  {
     //el coche indica que se ha terminado el viaje
-    log(s"        Fin del viaje... :-(")
-    
+    l.lock()
+    try {
+      log(s"        Fin del viaje... :-(")
+      bajar.signalAll()
+    } finally {
+      l.unlock()
+    }
   }
 
   override def run = {
