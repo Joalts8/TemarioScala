@@ -6,6 +6,15 @@ import Concurrente.Introduccion.*
 //Los locks permiten tener varios monitores en el mismo objeto, pero no funcionen implicitamente=> No se pone Sycroniced
 //También se pueden usar condiciones como en VarsCondicion.scala pero se llaman await y signal/signalAll
 //Usar siemptre Try para la SC; Finally para el unlock Catch si usa el thread interrup()-> :InterruptedException
+/*
+* l.lock()
+    try {
+
+    } finally {
+      l.unlock()
+    }
+* */
+
 object lectorEscritorLocks {
   private var nLectores = 0
   private var escribiendo = false
