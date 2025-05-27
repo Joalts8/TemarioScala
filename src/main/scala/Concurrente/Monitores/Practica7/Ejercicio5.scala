@@ -1,36 +1,60 @@
 package Concurrente.Monitores.Practica7
 
+import java.util.concurrent.locks.ReentrantLock
 import scala.util.Random
 
 object Barca{
   private var nIPhone = 0
   private var nAndroid = 0
-  
+  private val l = new ReentrantLock(true)
+  val cIphone=l.newCondition()
+  val cAndriod=l.newCondition()
 
   def paseoIphone(id:Int) =  {
-   
-    log(s"Estudiante IPhone $id se sube a la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
-    
+    l.lock()
+    try {
+      while (nAndroid>=3) cIphone.await()
+      nIPhone+=1
+      log(s"Estudiante IPhone $id se sube a la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
+    } finally {
+      l.unlock()
+    }
     
       //log(s"Empieza el viaje....")
       //Thread.sleep(Random.nextInt(200))
       //log(s"fin del viaje....")
-      
-    
-    log(s"Estudiante IPhone $id se baja de la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
-   
+
+    l.lock()
+    try {
+      nIPhone -= 1
+      log(s"Estudiante IPhone $id se baja de la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
+    } finally {
+      l.unlock()
+    }
   }
 
   def paseoAndroid(id:Int) =  {
-    
+    l.lock()
+    try {
+      while (nIPhone >= 3) cAndriod.await()
+      nAndroid += 1
+      log(s"Estudiante IPhone $id se sube a la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
+    } finally {
+      l.unlock()
+    }
     log(s"Estudiante Android $id se sube a la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
     
       //log(s"Empieza el viaje....")
       //Thread.sleep(Random.nextInt(200))
       //log(s"fin del viaje....")
-      
-    log(s"Estudiante Android $id se baja de la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
-    
+
+    l.lock()
+    try {
+      nAndroid -= 1
+      log(s"Estudiante Android $id se baja de la barca. Hay: iphone=$nIPhone,android=$nAndroid ")
+    } finally {
+      l.unlock()
+    }
   }
 }
 object Ejercicio5 {
