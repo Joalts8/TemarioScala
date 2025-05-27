@@ -14,7 +14,7 @@ object Guarderia{
   def entraBebe(id:Int) =  {
     l.lock()
     try {
-      while (nBebe<=3*nAdulto) cbebeIn.await()
+      while (nBebe>=3*nAdulto) cbebeIn.await()
       nBebe+=1
       log(s"Ha llegado un bebé. Bebés=$nBebe, Adultos=$nAdulto")
     } finally {
@@ -44,7 +44,7 @@ object Guarderia{
   def saleAdulto(id:Int) =  {
     l.lock()
     try {
-      while(nBebe<=3*(nAdulto-1))cAdultoOut.await()
+      while(nBebe>3*(nAdulto-1))cAdultoOut.await()
       nAdulto-=1
       log(s"Ha salido un adulto. Bebés=$nBebe, Adultos=$nAdulto")
     } finally {
