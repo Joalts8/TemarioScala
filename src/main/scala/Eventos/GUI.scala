@@ -1,7 +1,7 @@
 package Eventos
 
 import java.awt.*
-import java.awt.event.ActionListener
+import java.awt.event.{ActionEvent, ActionListener}
 import javax.swing.*
 import javax.swing.JFrame
 
@@ -25,6 +25,8 @@ JDialog -> Tienen un contenedor superior del que dependen
   1. Hacer el contenedor intermedio su panel de contenidoss-> setContentPane(Container)
   2. Dimensionar el contenedor superior.
   3. Hacer visible(o invisible) el contenedor superior-> ventana.setVisible(boolean)
+
+4. EVENTOS-> Un componente/menu puede disparar un evento-> recogido por CONTROLADOR-> xEvent y xListener
 */
 
 //1
@@ -51,17 +53,29 @@ class Panel extends JPanel {
     l.setText(str)
 }
 
+//3
+class Controlador(ven: Panel) extends ActionListener {
+  def actionPerformed(e:ActionEvent) = {
+    val comando = e.getActionCommand()
+    if (comando == "SI")
+      ven.cambiaTexto("Sí pulsado")
+    else if (comando == "NO")
+      ven.cambiaTexto("No pulsado")
+  }
+}
+
+
 object EjemploSimple {
   def main(args:Array[String]): Unit = {
     val panel = new Panel();
     //Controlador
-    val bt = new ActionListener(panel);
+    val bt = new Controlador(panel);
     panel.controlador(bt);
     //2
     val ventana = new JFrame("Un Ejemplo")
     ventana.setContentPane(panel)//1. Panel anterior=Panel de contenidos
     //ventana.setSize(ancho:Int, alto:Int) diemensionar ventana, no se usa-> pack()
-    //setPreferredSize(Dimension); setMinimunSize(Dimension); setMaximumSize(Dimension)
+    //setPreferredSize(Dimension); setMinimunSize(Dim ension); setMaximumSize(Dimension)
     ventana.pack()//2. Dimensionar según-> Gestor de esquemas, nº y orden de los componentes y su dim preferida
     ventana.setVisible(true)//3. hacer visible/invisible
     //ventana.setJMenuBar(Menu) // Coloca un menú
@@ -76,11 +90,4 @@ object EjemploSimple {
 * falta, se ajusta con el resto. Se usa-> add(bSí, BorderLayout.NORTH) Partes: SOUTH, EAST, WEST y CENTER
 * GridLayout-> Divide al componente en una rejilla. Se indica el número de filas y columnas, los componentes mantienen.
 * Dde izquierda a derecha y de arriba a abajo.   .setLayout(new GridLayout(fila,columnas))
-* */
-
-/*
-* EVENTOS
-*Un componente/menu puede disparar un evento-> recogido por CONTROLADOR
-*
-*
 * */
