@@ -18,4 +18,5 @@ Holiwi
 
 ### Monitores
 -BloquesSinc
+### Cómeme el CULO qué PAPU
 JIJIJIJA SUPER DONDE (TONTO)
