@@ -1,7 +1,5 @@
 package Concurrente.Monitores.Practica7
 
-import Laboratorio7.{log, thread}
-
 import java.util.concurrent.locks.ReentrantLock
 import scala.util.Random
 
