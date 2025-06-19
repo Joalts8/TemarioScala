@@ -358,10 +358,9 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
             if ((i + 1) % 10 == 0) sexyArea.append("\n")
         }
       }
-      
+
     }
   }
-
 
 
 
@@ -369,6 +368,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
     def crearGUI(ventana: JFrame): Unit = {
       val panel = new Panel
       val ctr = new Controlador(panel)
+      panel.controlador(ctr)
       ventana.setContentPane(panel)
       ventana.pack()
       ventana.setVisible(true)
