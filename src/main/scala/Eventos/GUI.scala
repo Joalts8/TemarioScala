@@ -26,7 +26,7 @@ JDialog -> Tienen un contenedor superior del que dependen
   2. Dimensionar el contenedor superior.
   3. Hacer visible(o invisible) el contenedor superior-> ventana.setVisible(boolean)
 
-4. EVENTOS-> Un componente/menu puede disparar un evento-> recogido por CONTROLADOR-> xEvent y xListener
+3. EVENTOS-> Un componente/menu puede disparar un evento-> recogido por CONTROLADOR-> xEvent y xListener
 */
 
 //1
@@ -67,6 +67,7 @@ class Controlador(ven: Panel) extends ActionListener {
 
 object EjemploSimple {
   def main(args:Array[String]): Unit = {
+    //esto se puede en def crearGUI(ventana), se crea antes ventana y demas dentro
     val panel = new Panel();
     //Controlador
     val bt = new Controlador(panel);
