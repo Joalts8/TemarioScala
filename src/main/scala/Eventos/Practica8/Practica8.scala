@@ -1,3 +1,5 @@
+//arreglar indices de worker; solo imprime 1 y sin barra de progreso
+
 package Eventos.Practica8
 
 import java.awt.event.{ActionEvent, ActionListener}
