@@ -13,21 +13,96 @@ class Primo(val pos: Int, n1: Int, n2: Int) {
   override def toString: String = s"$pos:$tupla"
 }
 
-class WorkerTwin {
+
+
+class WorkerTwin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
   def esPrimo(n: Int): Boolean = {
     def loop(div: Int): Boolean = {
       if (div * div > n) true
       else if (n % div == 0) false
       else loop(div + 1)
     }
-
     if (n == 1 || n == 2) true
     else loop(2)
   }
 
+  def listaPrimos(n: Int): Unit =
+    def loop(i: Int, pprimo: Int): Unit = {
+      if (i < n && !this.isCancelled)
+        if (esPrimo(pprimo))
+          if (esPrimo(pprimo + 4))
+            val primo = new Primo(i, pprimo, pprimo + 4)
+            publish(primo)
+            this.setProgress((i + 1) * 100 / n)
+            loop(i + 1, pprimo + 1)
+        else
+          loop(i, pprimo + 1)
+    }
+    loop(0, 1)
+
+  override def doInBackground(): Unit = {
+    this.setProgress(0)
+    listaPrimos(n)
+  }
+
+  override def done(): Unit = {
+    try {
+      panel.nuevoMensaje("Tarea finalizada")
+    } catch {
+      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada")
+    }
+  }
+
+  override def process(chunks: java.util.List[Primo]): Unit =
+    panel.listaPrimos(chunks,1)
+
 }
 
+
 class WorkerCousin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
+  def esPrimo(n: Int): Boolean = {
+    def loop(div: Int): Boolean = {
+      if (div * div > n) true
+      else if (n % div == 0) false
+      else loop(div + 1)
+    }
+    if (n == 1 || n == 2) true
+    else loop(2)
+  }
+
+  def listaPrimos(n: Int): Unit =
+    def loop(i: Int, pprimo: Int): Unit = {
+      if (i < n && !this.isCancelled)
+        if (esPrimo(pprimo))
+          if (esPrimo(pprimo + 4))
+            val primo = new Primo(i, pprimo, pprimo + 4)
+            publish(primo)
+            this.setProgress((i + 1) * 100 / n)
+            loop(i + 1, pprimo + 1)
+        else
+          loop(i, pprimo + 1)
+    }
+    loop(0, 1)
+
+  override def doInBackground(): Unit = {
+    this.setProgress(0)
+    listaPrimos(n)
+  }
+
+  override def done(): Unit = {
+    try {
+      panel.nuevoMensaje("Tarea finalizada")
+    } catch {
+      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada")
+    }
+  }
+
+  override def process(chunks: java.util.List[Primo]): Unit =
+    panel.listaPrimos(chunks,1)
+}
+
+
+class WorkerSexy (n: Int, panel: Panel) extends SwingWorker[Unit, Primo]{
   def esPrimo(n: Int): Boolean = {
     def loop(div: Int): Boolean = {
       if (div * div > n) true
@@ -67,22 +142,11 @@ class WorkerCousin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
     }
   }
 
-  override def process(chunks: util.List[Int]): Unit =
-    panel.listaPrimos(chunks)
+  override def process(chunks: java.util.List[Primo]): Unit =
+    panel.listaPrimos(chunks, 1)
 }
 
-class WorkerSexy {
-  def esPrimo(n: Int): Boolean = {
-    def loop(div: Int): Boolean = {
-      if (div * div > n) true
-      else if (n % div == 0) false
-      else loop(div + 1)
-    }
 
-    if (n == 1 || n == 2) true
-    else loop(2)
-  }
-}
 
 class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
   private var workerT: WorkerTwin = null
@@ -130,7 +194,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
     }
   }
 
-  override def propertyChange(evt: PropertyChangeEvent, n: Int): Unit = {
+  override def propertyChange(evt: PropertyChangeEvent): Unit = {
     if (evt.getPropertyName.equals("progress")) {
       val progreso = evt.getNewValue.asInstanceOf[Int]
       evt.getSource match {
@@ -141,6 +205,8 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
     }
   }
 }
+
+
 
   class Panel extends JPanel {
     val TWIN_FIELD = "NUMBER1"
@@ -273,7 +339,31 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         case 2 => Integer.parseInt(sexyField.getText)
       }
     }
+
+    def listaPrimos(lista: java.util.List[Primo],p:Int) = {
+      p match {
+        case 0 => {
+          for (i <- 0 until lista.size())
+            twinArea.append(s"${lista.get(i)} ")
+            if ((i + 1) % 10 == 0) twinArea.append("\n")
+        }
+        case 1 => {
+          for (i <- 0 until lista.size())
+            cousinArea.append(s"${lista.get(i)} ")
+            if ((i + 1) % 10 == 0) cousinArea.append("\n")
+        }
+        case 2 => {
+          for (i <- 0 until lista.size())
+            sexyArea.append(s"${lista.get(i)} ")
+            if ((i + 1) % 10 == 0) sexyArea.append("\n")
+        }
+      }
+      
+    }
   }
+
+
+
 
   object Main {
     def crearGUI(ventana: JFrame): Unit = {
@@ -288,7 +378,5 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
     def main(args: Array[String]): Unit = {
       val ventana = new JFrame("Un Ejemplo")
       crearGUI(ventana)
-
     }
-
   }
