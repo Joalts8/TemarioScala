@@ -1,5 +1,3 @@
-//arreglar indices de worker; solo imprime 1 y sin barra de progreso
-
 package Eventos.Practica8
 
 import java.awt.event.{ActionEvent, ActionListener}
@@ -32,14 +30,18 @@ class WorkerTwin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
     def loop(i: Int, pprimo: Int): Unit = {
       if (i < n && !this.isCancelled)
         if (esPrimo(pprimo))
-          if (esPrimo(pprimo + 4))
-            val primo = new Primo(i, pprimo, pprimo + 4)
+          if (esPrimo(pprimo + 2))
+            val primo = new Primo(i, pprimo, pprimo + 2)
             publish(primo)
             this.setProgress((i + 1) * 100 / n)
             loop(i + 1, pprimo + 1)
+          else {
+            loop(i, pprimo + 1)
+          }
         else
           loop(i, pprimo + 1)
     }
+    panel.nuevoMensaje("Calculando primos Twin",0)
     loop(0, 1)
 
   override def doInBackground(): Unit = {
@@ -49,14 +51,15 @@ class WorkerTwin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
 
   override def done(): Unit = {
     try {
-      panel.nuevoMensaje("Tarea finalizada")
+      get()
+      panel.nuevoMensaje("Tarea finalizada",0)
     } catch {
-      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada")
+      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada",3)
     }
   }
 
   override def process(chunks: java.util.List[Primo]): Unit =
-    panel.listaPrimos(chunks,1)
+    panel.listaPrimos(chunks,0)
 
 }
 
@@ -81,9 +84,13 @@ class WorkerCousin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
             publish(primo)
             this.setProgress((i + 1) * 100 / n)
             loop(i + 1, pprimo + 1)
+          else {
+            loop(i, pprimo + 1)
+          }
         else
           loop(i, pprimo + 1)
     }
+    panel.nuevoMensaje("Calculando primos Cousin",1)
     loop(0, 1)
 
   override def doInBackground(): Unit = {
@@ -93,9 +100,10 @@ class WorkerCousin(n: Int, panel: Panel) extends SwingWorker[Unit, Primo] {
 
   override def done(): Unit = {
     try {
-      panel.nuevoMensaje("Tarea finalizada")
+      get()
+      panel.nuevoMensaje("Tarea finalizada",1)
     } catch {
-      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada")
+      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada",3)
     }
   }
 
@@ -120,15 +128,18 @@ class WorkerSexy (n: Int, panel: Panel) extends SwingWorker[Unit, Primo]{
     def loop(i: Int, pprimo: Int): Unit = {
       if (i < n && !this.isCancelled)
         if (esPrimo(pprimo))
-          if (esPrimo(pprimo + 4))
-            val primo = new Primo(i, pprimo, pprimo + 4)
+          if (esPrimo(pprimo + 6))
+            val primo = new Primo(i, pprimo, pprimo + 6)
             publish(primo)
             this.setProgress((i + 1) * 100 / n)
             loop(i + 1, pprimo + 1)
+          else {
+            loop(i, pprimo + 1)
+          }
         else
           loop(i, pprimo + 1)
     }
-
+    panel.nuevoMensaje("Calculando primos Sexy",2)
     loop(0, 1)
 
   override def doInBackground(): Unit = {
@@ -138,14 +149,15 @@ class WorkerSexy (n: Int, panel: Panel) extends SwingWorker[Unit, Primo]{
 
   override def done(): Unit = {
     try {
-      panel.nuevoMensaje("Tarea finalizada")
+      get()
+      panel.nuevoMensaje("Tarea finalizada",2)
     } catch {
-      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada")
+      case e: CancellationException => panel.nuevoMensaje("Tarea cancelada",3)
     }
   }
 
   override def process(chunks: java.util.List[Primo]): Unit =
-    panel.listaPrimos(chunks, 1)
+    panel.listaPrimos(chunks, 2)
 }
 
 
@@ -165,7 +177,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         workerT.addPropertyChangeListener(this)
         workerT.execute()
       } catch {
-        case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto")
+        case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto",0)
       }
     } else if (e.getActionCommand.equals("COUSIN")) {
       try {
@@ -176,7 +188,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         workerC.addPropertyChangeListener(this)
         workerC.execute()
       } catch {
-        case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto")
+        case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto",1)
       }
     } else if (e.getActionCommand.equals("SEXY")) {
       try {
@@ -187,7 +199,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         workerS.addPropertyChangeListener(this)
         workerS.execute()
       } catch {
-        case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto")
+        case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto",2)
       }
     } else if (e.getActionCommand.equals("CANCELAR")) {
       if (workerT != null) workerT.cancel(true)
@@ -278,6 +290,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
       val twinPanel = JPanel(BorderLayout())
       twinPanel.add(BorderLayout.NORTH, twinTop)
       twinPanel.add(BorderLayout.CENTER, twinScroll)
+      twinPanel.add(BorderLayout.SOUTH, progressTwin)
       val twinBottom = JPanel()
       twinBottom.add(twinMsg)
       twinPanel.add(BorderLayout.SOUTH, twinBottom)
@@ -285,6 +298,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
       val cousinPanel = JPanel(BorderLayout())
       cousinPanel.add(BorderLayout.NORTH, cousinTop)
       cousinPanel.add(BorderLayout.CENTER, cousinScroll)
+      cousinPanel.add(BorderLayout.SOUTH, progressCousin)
       val cousinBottom = JPanel()
       cousinBottom.add(cousinMsg)
       cousinPanel.add(BorderLayout.SOUTH, cousinBottom)
@@ -292,6 +306,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
       val sexyPanel = JPanel(BorderLayout())
       sexyPanel.add(BorderLayout.NORTH, sexyTop)
       sexyPanel.add(BorderLayout.CENTER, sexyScroll)
+      sexyPanel.add(BorderLayout.SOUTH, progressSexy)
       val sexyBottom = JPanel()
       sexyBottom.add(sexyMsg)
       sexyPanel.add(BorderLayout.SOUTH, sexyBottom)
@@ -312,10 +327,17 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
       cousinField.setActionCommand("COUSIN")
       sexyField.addActionListener(ctr)
       sexyField.setActionCommand("SEXY")
+      cancelButton.addActionListener(ctr)
+      cancelButton.setActionCommand("CANCELAR")
     }
 
-    def nuevoMensaje(str: String) = {
-      statusMessage.setText(str)
+    def nuevoMensaje(str: String, p:Int) = {
+      p match {
+        case 0 => twinMsg.setText(str)
+        case 1 => cousinMsg.setText(str)
+        case 2 => sexyMsg.setText(str)
+        case 3 => statusMessage.setText(str)
+      }
     }
 
     def limpiarArea(area: Int) = {
