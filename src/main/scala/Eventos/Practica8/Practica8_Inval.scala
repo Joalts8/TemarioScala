@@ -1,11 +1,11 @@
 package Eventos.Practica8
-
+//no valida debido a no 3 ctr para progress(211)
 import java.awt.event.{ActionEvent, ActionListener}
 import java.awt.{BorderLayout, GridLayout}
 import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import javax.swing.*
 import scala.concurrent.CancellationException
-
+/*
 
 class Primo(val pos: Int, n1: Int, n2: Int) {
   val tupla = (n1, n2)
@@ -161,32 +161,6 @@ class WorkerSexy (n: Int, panel: Panel) extends SwingWorker[Unit, Primo]{
 }
 
 
-class ProgressListenerTwin(panel: Panel, worker: WorkerTwin) extends PropertyChangeListener {
-  override def propertyChange(evt: PropertyChangeEvent): Unit = {
-    if (evt.getPropertyName == "progress" && evt.getSource == worker) {
-      val progreso = evt.getNewValue.asInstanceOf[Int]
-      panel.nuevoProgreso(progreso, 0)
-    }
-  }
-}
-
-class ProgressListenerCousin(panel: Panel, worker: WorkerCousin) extends PropertyChangeListener {
-  override def propertyChange(evt: PropertyChangeEvent): Unit = {
-    if (evt.getPropertyName == "progress" && evt.getSource == worker) {
-      val progreso = evt.getNewValue.asInstanceOf[Int]
-      panel.nuevoProgreso(progreso, 1)
-    }
-  }
-}
-
-class ProgressListenerSexy(panel: Panel, worker: WorkerSexy) extends PropertyChangeListener {
-  override def propertyChange(evt: PropertyChangeEvent): Unit = {
-    if (evt.getPropertyName == "progress" && evt.getSource == worker) {
-      val progreso = evt.getNewValue.asInstanceOf[Int]
-      panel.nuevoProgreso(progreso, 2)
-    }
-  }
-}
 
 class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
   private var workerT: WorkerTwin = null
@@ -200,7 +174,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         panel.limpiarArea(0)
         panel.nuevoProgreso(0, 0)
         workerT = new WorkerTwin(n, panel)
-        workerT.addPropertyChangeListener(new ProgressListenerTwin(panel, workerT))
+        workerT.addPropertyChangeListener(this)
         workerT.execute()
       } catch {
         case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto",0)
@@ -211,7 +185,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         panel.limpiarArea(1)
         panel.nuevoProgreso(0, 1)
         workerC = new WorkerCousin(n, panel)
-        workerC.addPropertyChangeListener(new ProgressListenerCousin(panel, workerC))
+        workerC.addPropertyChangeListener(this)
         workerC.execute()
       } catch {
         case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto",1)
@@ -222,7 +196,7 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
         panel.limpiarArea(2)
         panel.nuevoProgreso(0, 2)
         workerS = new WorkerSexy(n, panel)
-        workerS.addPropertyChangeListener(new ProgressListenerSexy(panel, workerS))
+        workerS.addPropertyChangeListener(this)
         workerS.execute()
       } catch {
         case e: NumberFormatException => panel.nuevoMensaje("Número incorrecto",2)
@@ -429,4 +403,4 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
       val ventana = new JFrame("Un Ejemplo")
       crearGUI(ventana)
     }
-  }
+  }*/
