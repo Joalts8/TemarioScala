@@ -212,9 +212,9 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
     if (evt.getPropertyName.equals("progress")) {
       val progreso = evt.getNewValue.asInstanceOf[Int]
       evt.getSource match {
-        case workerT => panel.nuevoProgreso(progreso, 0)
-        case workerC => panel.nuevoProgreso(progreso, 1)
-        case workerS => panel.nuevoProgreso(progreso, 2)
+        case src if src == workerT => panel.nuevoProgreso(progreso, 0)
+        case src if src == workerC => panel.nuevoProgreso(progreso, 1)
+        case src if src == workerS => panel.nuevoProgreso(progreso, 2)
       }
     }
   }
@@ -290,25 +290,25 @@ class Controlador(panel: Panel) extends ActionListener, PropertyChangeListener {
       val twinPanel = JPanel(BorderLayout())
       twinPanel.add(BorderLayout.NORTH, twinTop)
       twinPanel.add(BorderLayout.CENTER, twinScroll)
-      twinPanel.add(BorderLayout.SOUTH, progressTwin)
       val twinBottom = JPanel()
       twinBottom.add(twinMsg)
+      twinBottom.add(progressTwin)
       twinPanel.add(BorderLayout.SOUTH, twinBottom)
 
       val cousinPanel = JPanel(BorderLayout())
       cousinPanel.add(BorderLayout.NORTH, cousinTop)
       cousinPanel.add(BorderLayout.CENTER, cousinScroll)
-      cousinPanel.add(BorderLayout.SOUTH, progressCousin)
       val cousinBottom = JPanel()
       cousinBottom.add(cousinMsg)
+      cousinBottom.add(progressCousin)
       cousinPanel.add(BorderLayout.SOUTH, cousinBottom)
 
       val sexyPanel = JPanel(BorderLayout())
       sexyPanel.add(BorderLayout.NORTH, sexyTop)
       sexyPanel.add(BorderLayout.CENTER, sexyScroll)
-      sexyPanel.add(BorderLayout.SOUTH, progressSexy)
       val sexyBottom = JPanel()
       sexyBottom.add(sexyMsg)
+      sexyBottom.add(progressSexy)
       sexyPanel.add(BorderLayout.SOUTH, sexyBottom)
 
       centerPanel.add(twinPanel)
