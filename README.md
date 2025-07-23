@@ -1,5 +1,6 @@
 # Scala
 Holiwi
+Todo lo necesario para aprobar Programacion Avanzada II
 
 ---
 ## Funcional
@@ -17,7 +18,7 @@ Holiwi
 -Examenes -> Junio2022(solo hecho con semaforos por ahora)
 
 ### Monitores
--BloquesSinc
+-BloquesSinc+ VarCondicion/Locks -> Aqui son 2 formas para hacerlo(Recomendo Locks)
 ### Cómeme el CULO qué PAPU
 -JIJIJIJA SUPER DONDE (TONTO)
 a
